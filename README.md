@@ -1,1 +1,1 @@
-Dave's Travel Agency Website for the HTML/CSS/JS assignment.
+Travel Experts Agency Website for the threaded project.
