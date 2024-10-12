@@ -1,0 +1,22 @@
+{
+  "name": "team3travelexperts",
+  "version": "1.0.0",
+  "description": "Travel Experts Agency Website for the threaded project.",
+  "main": "contacts.js",
+  "devDependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "mysql2": "^3.11.3",
+    "nodemon": "^3.1.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon contacts.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "team3travelexperts": "file:"
+  }
+}
