@@ -6,7 +6,7 @@ const appDir = path.dirname(require.main.filename);
 
 /// Set the view engine to EJS
 app.set("view engine", "ejs");
-console.log("asdasdas: " + path.join(appDir, "public", "views"));
+// console.log("asdasdas: " + path.join(appDir, "public", "views"));
 // Set the absolute path to the views directory
 app.set("views", path.join(appDir, "public", "views"));
 
@@ -36,6 +36,8 @@ db.connect((err) => {
 
 //for / and home to used as same
 app.get(["/", "/home"], (req, res) => {
+  // this returns the basic detils from packages and with seperate date that splits as
+  // date month and year for start and end of the package.
   const query =
     "SELECT PkgName,PkgDesc,PkgBasePrice,\
 		day(PkgStartDate) as startDay, month(PkgStartDate) as startMonth, year(PkgStartDate) as startYear,\
@@ -54,6 +56,7 @@ app.get(["/", "/home"], (req, res) => {
   });
 });
 
+// gets the agent contact details to contact page
 app.get("/contact", (req, res) => {
   const query = "select * from agents";
 
