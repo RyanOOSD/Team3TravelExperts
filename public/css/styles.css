@@ -8,43 +8,48 @@ Assignment: HTML, CSS, JavaScript
 
 /* Changes amount of top padding dependiing on the size of the viewport  */
 @media screen and (min-width: 769px) {
-    body{
-        padding-top: 86px;
-    }
+  body {
+    padding-top: 86px;
+  }
 }
 @media screen and (max-width: 768px) {
-    body{
-        padding-top: 171px;
-    }
+  body {
+    padding-top: 171px;
+  }
 }
 
 /* Increase the size of the shadow on card text */
 .text-shadow-1 {
-    text-shadow: 2px 2px 10px black;
+  text-shadow: 2px 2px 10px black;
 }
 
 /* By default, hide form descriptions when page is loaded */
 #first-description {
-    display: none;
+  display: none;
 }
 #last-description {
-    display: none;
+  display: none;
 }
 #email-description {
-    display: none;
+  display: none;
 }
 #phone-description {
-    display: none;
+  display: none;
 }
 #password-description {
-    display: none;
+  display: none;
 }
 #address-description {
-    display: none;
+  display: none;
 }
 #city-description {
-    display: none;
+  display: none;
 }
 #postal-description {
-    display: none;
+  display: none;
+}
+
+.package-style {
+  background: linear-gradient(to bottom right, #4a00e0, #8e2de2);
+  border-radius: 15px;
 }
