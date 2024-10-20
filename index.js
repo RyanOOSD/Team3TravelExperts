@@ -54,7 +54,7 @@ app.get(["/", "/home"], (req, res) => {
       throw err;
     } else {
       console.log(result);
-      res.render("index", { package: result });
+      res.render("index", {pageTitle: "Home | Travel Experts", package: result });
     }
   });
 });
@@ -68,7 +68,7 @@ app.get("/contact", (req, res) => {
       throw err;
     } else {
       console.log(result);
-      res.render("contact", { agents: result });
+      res.render("contact", {pageTitle: "Contact Us | Travel Experts", agents: result });
     }
   });
 });
@@ -80,7 +80,7 @@ app.get("/booking", (req, res) => {
 
   db.query(query, [packageId], (err, results) => {
     if (err) throw err;
-    res.render("booking", { package: results[0] });
+    res.render("booking", {package: results[0] });
   });
 });
 
@@ -153,7 +153,7 @@ app.post("/submit-booking", async (req, res) => {
 
 // Endpoint to serve registration page
 app.get("/register", async(req, res) => {
-  res.render("register");
+  res.render("register", {pageTitle: "Register | Travel Experts"});
 });
 
 // Create generic endpoint to serve error for invalid requests
