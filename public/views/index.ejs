@@ -87,33 +87,42 @@ Assignment: HTML, CSS, JavaScript
     <div class="container px-4 py-5" id="custom-cards">
         <h2 class="pb-2 border-bottom">Featured Destinations</h2>
         <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
-            <% for(var i=0; i<package.length; i++) {%>
+            <% for (var i = 0; i < package.length; i++) { %>
             <div class="col pb-5">
                 <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
                     <div class="d-flex flex-column h-100 text-white text-shadow-1 p-4 package-style">
-                        <h3 class="display-6 lh-1 fw-bold mb-3"><%= package[i]['PkgName'] %></h3>                        
-                        <p class="fw-bold mb-1"><%= package[i]['PkgDesc'] %></p>  
-                    
+                        <h3 class="display-6 lh-1 fw-bold mb-3"><%= package[i]['PkgName'] %></h3>
+                        <p class="fw-bold mb-1"><%= package[i]['PkgDesc'] %></p>
+    
                         <div class="d-flex justify-content-between align-items-center mt-2">
                             <span class="fw-light" style="font-size: 1.2rem;">
-                                🗓️ Travel Dates: <%= package[i]['startDay'] %>/<%= package[i]['startMonth'] %>/<%= package[i]['startYear'] %> - 
-                                <%= package[i]['endDay'] %>/<%= package[i]['endMonth'] %>/<%= package[i]['endYear'] %></span>
+                                🗓️ Travel Dates: <%= package[i]['startDay'] %>/<%= package[i]['startMonth'] %>/<%= package[i]['startYear'] %> -
+                                <%= package[i]['endDay'] %>/<%= package[i]['endMonth'] %>/<%= package[i]['endYear'] %>
+                            </span>
                         </div>
-                    
+    
                         <div class="mt-3">
                             <span class="badge bg-success fs-5"><%= package[i]['PkgBasePrice'] %></span>
                             <span class="badge bg-warning text-dark fs-6 ms-2">Limited Offer</span>
-                        </div> 
-                    
+                        </div>
+    
                         <p class="mt-4 text-muted" style="font-size: 0.9rem;">
                             *Prices include flights, hotels, meals, and activities.
                         </p>
+    
+                        <!-- Book Now Button -->
+                        <div class="mt-auto">
+                            <a href="/booking?id=<%= package[i]['PackageId'] %>" class="btn btn-primary w-100 mt-3">
+                                Book Now
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <% } %>            
+            <% } %>
         </div>
     </div>
+    
 
      <!-- Bootstrap Features -->
      <div class="container px-4 py-5" id="icon-grid">
