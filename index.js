@@ -42,10 +42,10 @@ app.get(["/", "/home"], (req, res) => {
   // this returns the basic detils from packages and with seperate date that splits as
   // date month and year for start and end of the package.
   const query =
-    "SELECT PackageId, PkgName,PkgDesc,PkgBasePrice,\
+    "SELECT PackageId,PkgName,PkgDesc,PkgBasePrice,\
 		day(PkgStartDate) as startDay, month(PkgStartDate) as startMonth, year(PkgStartDate) as startYear,\
     day(PkgEndDate) as endDay, month(PkgEndDate) endMonth, year(PkgEndDate) as endYear\
-    FROM packages  where PkgStartDate> NOW();";
+    FROM packages where PkgStartDate> NOW()";
 
   // const query = "SELECT * FROM packages;";
 
@@ -149,6 +149,16 @@ app.post("/submit-booking", async (req, res) => {
     console.error("Error saving data:", error);
     res.status(500).send("Error processing booking.");
   }
+});
+
+// Endpoint to serve registration page
+app.get("/register", async(req, res) => {
+  res.render("register");
+});
+
+// Create generic endpoint to serve error for invalid requests
+app.use((req, res) => {
+  res.status(400).send("400: Bad Request");
 });
 
 // Function to generate a random Number
