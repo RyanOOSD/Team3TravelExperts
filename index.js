@@ -152,8 +152,49 @@ app.post("/submit-booking", async (req, res) => {
 });
 
 // Endpoint to serve registration page
-app.get("/register", async(req, res) => {
+app.get("/register", (req, res) => {
   res.render("register", {pageTitle: "Register | Travel Experts"});
+});
+
+// Endpoint to handle registration submissions
+app.post("/submit-registration", async(req, res) => {
+  const { 
+    firstName,
+    lastName,
+    email,
+    homePhone,
+    busPhone,
+    address,
+    city,
+    province,
+    postalCode,
+    country,
+    username,
+    password
+  } = req.body
+  const registerCustomer = `
+    INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, CustUserNm, CustPassword)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+  const customerInput = [
+    firstName,
+    lastName,
+    address,
+    city,
+    province,
+    postalCode,
+    country,
+    province,
+    postalCode,
+    country,
+    homePhone,
+    busPhone,
+    email,
+    username,
+    password
+  ];
+  db.query(registerCustomer, customerInput)
+  res.render("register", {pageTitle: "Register | Travel Experts"})
 });
 
 // Create generic endpoint to serve error for invalid requests

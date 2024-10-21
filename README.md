@@ -8,6 +8,7 @@ This project involves building a dynamic travel agency website using **Express.j
 
 - **mysql2**
 - **express**
+- **express-validator**
 - **nodemon**
 - **ejs**
 
@@ -20,7 +21,7 @@ This project involves building a dynamic travel agency website using **Express.j
 npm init -y
 
 # Step 2: Install required dependencies
-npm i --save-dev nodemon ejs express mysql2
+npm i --save-dev nodemon ejs express express-validator mysql2
 
 # Step 3: Start the server
 npm run start

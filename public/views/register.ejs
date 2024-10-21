@@ -10,63 +10,61 @@ Assignment: HTML, CSS, JavaScript
 
     <!-- Bootstrap Form -->
     <main class="container form-register w-100 mt-5">
-        <form class="row g-0 needs-validation">
-            <h1 class="h3 mb-3 fw-normal mt-5">Account Registration</h1>
+        <form action="/submit-registration" method="POST" onsubmit="return formValidation()" class="row g-0 mt-5 needs-validation">
+            <h1 class="h1 mt-5 mb-3 text-center">Account Registration</h1>
+            <h4 class="h4 mb-3 text-center">Personal Information</h4>
             <div class="form-floating col-md-6">
-                <input type="text" class="form-control" id="floating-firstname" placeholder="John">
-                <label for="floating-firstname">First Name</label>
+                <input type="text" name="firstName" class="form-control" id="floatingFirst" placeholder="John">
+                <label for="floatingFirst">First Name</label>
             </div>
             <div class="form-floating col-md-6">
-                <input type="text" class="form-control" id="floating-lastname" placeholder="Doe">
-                <label for="floating-lastname">Last Name</label>
+                <input type="text" name="lastName" class="form-control" id="floatingLast" placeholder="Doe">
+                <label for="floatingLast">Last Name</label>
             </div>
             <div class="form-floating">
-                <input type="email" class="form-control" id="floating-email" placeholder="name@example.com"> 
-                <label for="floating-email">Email address</label>
+                <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="name@example.com"> 
+                <label for="floatingEmail">Email address</label>
             </div>
             <div class="form-floating">
-                <input type="text" class="form-control" id="floating-phone" placeholder="(555) 555-5555"> 
-                <label for="floating-phone">Phone Number</label>
+                <input type="text" name="homePhone" class="form-control" id="floatingHPhone" placeholder="(555) 555-5555"> 
+                <label for="floatingHPhone">Home Phone</label>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="floating-password" placeholder="Password">
-                <label for="floating-password">Password</label>
+                <input type="text" name="busPhone" class="form-control" id="floatingBPhone" placeholder="(555) 555-5555"> 
+                <label for="floatingBPhone">Business Phone</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" name="address" class="form-control" id="floatingAddress" placeholder="Address">
+                <label for="floatingAddress">Address</label>
+            </div>
+            <div class="form-floating col-md-4">
+                <input type="text" name="city" class="form-control" id="floatingCity" placeholder="City">
+                <label for="floatingCity">City</label>
+            </div>
+            <div class="form-floating col-md-4">
+                <input type="text" name="province" class="form-control" id="floatingProvince" placeholder="Alberta">
+                <label for="floatingProvince">Province</label>
+            </div>
+            <div class="form-floating col-md-4">
+                <input type="text" name="postalCode" class="form-control" id="floatingPostal" placeholder="T2C 5P6">
+                <label for="floatingPostal">Postal Code</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" name="country" class="form-control" id="floatingCountry" placeholder="Canada">
+                <label for="floatingCountry">Country</label>
+            </div>
+            <h4 class="h4 my-3 text-center">Account Details</h4>
+            <div class="form-floating col-md-6">
+                <input type="text" name="username" class="form-control" id="floatingUser" placeholder="John">
+                <label for="floatingUser">Username</label>
             </div>
             <div class="form-floating col-md-6">
-                <input type="text" class="form-control" id="floating-address" placeholder="Address">
-                <label for="floating-address">Address</label>
+                <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
             </div>
-            <div class="form-floating col-md-6">
-                <input type="text" class="form-control" id="floating-city" placeholder="City">
-                <label for="floating-city">City</label>
-            </div>
-            <p id="city-description">Input your city.</p>
-            <div class="form-floating col-md-6">
-                <select class="form-control form-select" id="floating-province">
-                    <option value="" disabled selected hidden>Province / Territory</option>
-                    <option value="AB">Alberta</option>
-                    <option value="BC">British Columbia</option>
-                    <option value="MB">Manitoba</option>
-                    <option value="NB">New Brunswick</option>
-                    <option value="NL">Newfoundland and Labrador</option>
-                    <option value="NT">Northwest Territories</option>
-                    <option value="NS">Nova Scotia</option>
-                    <option value="NU">Nunavut</option>
-                    <option value="ON">Ontario</option>
-                    <option value="PE">Prince Edward Island</option>
-                    <option value="QC">Quebec</option>
-                    <option value="SK">Saskatchewan</option>
-                    <option value="YT">Yukon</option>
-                </select>
-                <label for="floating-province">Province / Territory</label>
-            </div>
-            <div class="form-floating col-md-6">
-                <input type="text" class="form-control" id="floating-postal" placeholder="T2C 5P6">
-                <label for="floating-postal">Postal Code</label>
-            </div>
-            <div class="d-grid gap-2 col-6 d-md-block pt-3">
-                <button class="btn btn-primary py-2 form-btns" type="button" id="submit-btn">Register</button>
-                <button class="btn btn-secondary py-2 form-btns" type="button" id="reset-btn">Reset</button>
+            <div class="row justify-content-center gap-2 py-3">
+                <button type="submit" class="btn btn-primary py-2 col-md-3">Register</button>
+                <button type="reset" class="btn btn-secondary py-2 col-md-3">Reset</button>
             </div>
         </form>
     </main>
