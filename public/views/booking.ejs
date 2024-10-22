@@ -1,43 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Travel Booking Form</title>
+<%- include("includes/header.ejs") %>
 
-    <!-- Apply Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-    <!-- Bootstrap CSS for cards and custom stylesheet -->
-    <link
-      rel="stylesheet"
-      href="https://getbootstrap.com/docs/5.3/examples/features/features.css"
-    />
-    <link href="/css/styles.css" rel="stylesheet" />
-    <style>
-      .booking-form {
-        max-width: 800px;
-        margin: 50px auto;
-        padding: 30px;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
+    <div class="container my-5">
       <div class="booking-form">
-        <h2 class="text-center mb-4">Travel Booking Form</h2>
+        <h2 class="text-center my-4">Travel Booking Form</h2>
 
-        <form action="/submit-booking" method="POST">
+        <form action="/submit-booking" method="POST" onsubmit="return bookValidation()">
           <input
             type="hidden"
             name="packageId"
+            id="packageNumId"
             value="<%= package.PackageId %>"
           />
           <!-- Package Details Section (Disabled) -->
@@ -47,6 +18,7 @@
               <input
                 type="text"
                 class="form-control"
+                id="packageNameId"
                 value="<%= package.PkgName %>"
                 disabled
               />
@@ -56,6 +28,7 @@
               <input
                 type="text"
                 class="form-control"
+                id="packagePriceId"
                 value="$<%= package.PkgBasePrice %>"
                 disabled
               />
@@ -68,6 +41,7 @@
               <input
                 type="text"
                 class="form-control"
+                id="packageStartId"
                 value="<%= new Date(package.PkgStartDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>"
                 disabled
               />
@@ -77,9 +51,16 @@
               <input
                 type="text"
                 class="form-control"
+                id="packageEndId"
                 value="<%= new Date(package.PkgEndDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>"
                 disabled
               />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="travelerCountId" class="form-label">Number of Travellers</label>
+              <input type="number" name="travelerCount" class="form-control" id="travelerCountId">
             </div>
           </div>
 
@@ -87,131 +68,119 @@
           <h5 class="mt-4">Customer Information</h5>
           <div class="row mb-3">
             <div class="col-md-6">
-              <label for="firstName" class="form-label">First Name</label>
+              <label for="firstNameId" class="form-label">First Name</label>
               <input
                 type="text"
                 class="form-control"
-                id="firstName"
+                id="firstNameId"
                 name="firstName"
-                maxlength="25"
-                required
               />
             </div>
             <div class="col-md-6">
-              <label for="lastName" class="form-label">Last Name</label>
+              <label for="lastNameId" class="form-label">Last Name</label>
               <input
                 type="text"
                 class="form-control"
-                id="lastName"
+                id="lastNameId"
                 name="lastName"
-                maxlength="25"
-                required
               />
             </div>
           </div>
 
           <div class="mb-3">
-            <label for="address" class="form-label">Address</label>
+            <label for="addressId" class="form-label">Address</label>
             <input
               type="text"
               class="form-control"
-              id="address"
+              id="addressId"
               name="address"
-              maxlength="75"
-              required
             />
           </div>
 
           <div class="row mb-3">
-            <div class="col-md-6">
-              <label for="city" class="form-label">City</label>
+            <div class="col-md-3">
+              <label for="cityId" class="form-label">City</label>
               <input
                 type="text"
                 class="form-control"
-                id="city"
+                id="cityId"
                 name="city"
-                maxlength="50"
-                required
               />
             </div>
             <div class="col-md-3">
-              <label for="province" class="form-label">Province</label>
+              <label for="provinceId" class="form-label">Province</label>
               <input
                 type="text"
                 class="form-control"
-                id="province"
+                id="provinceId"
                 name="province"
-                maxlength="2"
-                required
               />
             </div>
             <div class="col-md-3">
-              <label for="postalCode" class="form-label">Postal Code</label>
+              <label for="postalCodeId" class="form-label">Postal Code</label>
               <input
                 type="text"
                 class="form-control"
-                id="postalCode"
+                id="postalCodeId"
                 name="postalCode"
-                maxlength="7"
-                required
+              />
+            </div>
+            <div class="col-md-3">
+              <label for="countryId" class="form-label">Country</label>
+              <input
+                type="text"
+                class="form-control"
+                id="countryId"
+                name="country"
               />
             </div>
           </div>
 
           <div class="row mb-3">
             <div class="col-md-6">
-              <label for="country" class="form-label">Country</label>
-              <input
-                type="text"
-                class="form-control"
-                id="country"
-                name="country"
-                maxlength="25"
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="homePhone" class="form-label">Home Phone</label>
+              <label for="homePhoneId" class="form-label">Home Phone</label>
               <input
                 type="tel"
                 class="form-control"
-                id="homePhone"
+                id="homePhoneId"
                 name="homePhone"
               />
             </div>
-          </div>
-
-          <div class="row mb-3">
             <div class="col-md-6">
-              <label for="busPhone" class="form-label">Business Phone</label>
+              <label for="busPhoneId" class="form-label">Business Phone</label>
               <input
                 type="tel"
                 class="form-control"
-                id="busPhone"
+                id="busPhoneId"
                 name="busPhone"
-                required
               />
             </div>
-            <div class="col-md-6">
-              <label for="email" class="form-label">Email</label>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-12">
+              <label for="emailId" class="form-label">Email</label>
               <input
                 type="email"
                 class="form-control"
-                id="email"
+                id="emailId"
                 name="email"
-                maxlength="50"
-                required
               />
             </div>
           </div>
 
           <div class="mb-3">
-            <label for="agentId" class="form-label">Agent ID (Optional)</label>
-            <input
-              type="number"
+            <label for="agentId" class="form-label">Agent ID</label>
+            <select
               class="form-control"
               id="agentId"
               name="agentId"
-            />
+            >
+              <option value="" disabled selected hidden></option>
+              <% agents.forEach(agent => { %>
+                <option value="<%= agent.AgentId %>"><%= agent.AgentId + " - " + agent.AgtFirstName + " " + agent.AgtLastName %></option>
+              <% }) %>
+            </select>
           </div>
 
           <!-- Submit Button -->
@@ -223,5 +192,5 @@
         </form>
       </div>
     </div>
-  </body>
-</html>
+
+<%- include("includes/footer.ejs") %>
