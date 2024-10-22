@@ -207,7 +207,7 @@ app.post("/submit-registration", async(req, res) => {
 
 // Create generic endpoint to serve error for invalid requests
 app.use((req, res) => {
-  res.status(400).send("400: Bad Request");
+  res.render("error", {pageTitle: "Error! | Travel Experts", invalidUrl: req.url})
 });
 
 // Function to generate a random Number
