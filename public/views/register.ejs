@@ -8,74 +8,177 @@ Assignment: HTML, CSS, JavaScript
 
 <%- include("includes/header.ejs") %>
 
-    <!-- Bootstrap Form -->
-    <main class="container form-register w-100 mt-5">
-        <form action="/submit-registration" method="POST" onsubmit="return regValidation()" class="row g-0 mt-5 needs-validation">
-            <h1 class="h1 mt-5 mb-3 text-center">Account Registration</h1>
-            <h4 class="h4 mb-3">Personal Information</h4>
-            <div class="form-floating col-md-6">
-                <input type="text" name="firstName" class="form-control" id="floatingFirst" placeholder="John">
-                <label for="floatingFirst">First Name</label>
-            </div>
-            <div class="form-floating col-md-6">
-                <input type="text" name="lastName" class="form-control" id="floatingLast" placeholder="Doe">
-                <label for="floatingLast">Last Name</label>
-            </div>
-            <div class="form-floating">
-                <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="name@example.com"> 
-                <label for="floatingEmail">Email address</label>
-            </div>
-            <div class="form-floating">
-                <input type="text" name="homePhone" class="form-control" id="floatingHPhone" placeholder="(555) 555-5555"> 
-                <label for="floatingHPhone">Home Phone</label>
-            </div>
-            <div class="form-floating">
-                <input type="text" name="busPhone" class="form-control" id="floatingBPhone" placeholder="(555) 555-5555"> 
-                <label for="floatingBPhone">Business Phone</label>
-            </div>
-            <div class="form-floating">
-                <input type="text" name="address" class="form-control" id="floatingAddress" placeholder="Address">
-                <label for="floatingAddress">Address</label>
-            </div>
-            <div class="form-floating col-md-4">
-                <input type="text" name="city" class="form-control" id="floatingCity" placeholder="City">
-                <label for="floatingCity">City</label>
-            </div>
-            <div class="form-floating col-md-4">
-                <input type="text" name="province" class="form-control" id="floatingProvince" placeholder="Alberta">
-                <label for="floatingProvince">Province</label>
-            </div>
-            <div class="form-floating col-md-4">
-                <input type="text" name="postalCode" class="form-control" id="floatingPostal" placeholder="T2C 5P6">
-                <label for="floatingPostal">Postal Code</label>
-            </div>
-            <div class="form-floating">
-                <input type="text" name="country" class="form-control" id="floatingCountry" placeholder="Canada">
-                <label for="floatingCountry">Country</label>
-            </div>
-            <div class="form-floating">
-                <select class="form-control" id="floatingAgentId" name="agentId">
-                <option value="" disabled selected hidden>Pick an agent...</option>
-                <% agents.forEach(agent => { %>
-                    <option value="<%= agent.AgentId %>"><%= agent.AgentId + " - " + agent.AgtFirstName + " " + agent.AgtLastName %></option>
-                <% }) %>
-                </select>
-                <label for="floatingAgentId">Agent ID</label>
-            </div>
-            <h4 class="h4 my-3">Account Details</h4>
-            <div class="form-floating col-md-6">
-                <input type="text" name="username" class="form-control" id="floatingUser" placeholder="John">
-                <label for="floatingUser">Username</label>
-            </div>
-            <div class="form-floating col-md-6">
-                <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
-            </div>
-            <div class="row justify-content-center gap-2 py-3">
-                <button type="submit" class="btn btn-primary py-2 col-md-3">Register</button>
-                <button type="reset" class="btn btn-secondary py-2 col-md-3">Reset</button>
-            </div>
-        </form>
-    </main>
+<!-- Bootstrap Form -->
+<main class="container form-register w-100 mt-5">
+  <form
+    action="/submit-registration"
+    method="POST"
+    class="row g-0 mt-5 needs-validation"
+  >
+    <h1 class="h1 mt-5 mb-3 text-center">Account Registration</h1>
+    <h4 class="h4 mb-3">Personal Information</h4>
+    <div class="form-floating col-md-6">
+      <input
+        type="text"
+        name="firstName"
+        class="form-control"
+        id="floatingFirst"
+        required
+      />
+      <label for="floatingFirst">First Name</label>
+    </div>
+    <div class="form-floating col-md-6">
+      <input
+        type="text"
+        name="lastName"
+        class="form-control"
+        id="floatingLast"
+        required
+      />
+      <label for="floatingLast">Last Name</label>
+    </div>
+    <div class="form-floating">
+      <input
+        type="email"
+        name="email"
+        class="form-control"
+        id="floatingEmail"
+        required
+      />
+      <label for="floatingEmail">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input
+        type="text"
+        name="homePhone"
+        class="form-control"
+        id="floatingHPhone"
+        maxlength="10"
+        minlength="10"
+        required
+      />
+      <label for="floatingHPhone">Home Phone</label>
+    </div>
+    <div class="form-floating">
+      <input
+        type="text"
+        name="busPhone"
+        class="form-control"
+        id="floatingBPhone"
+        minlength="10"
+        maxlength="10"
+        required
+      />
+      <label for="floatingBPhone">Business Phone</label>
+    </div>
+    <div class="form-floating">
+      <input
+        type="text"
+        name="address"
+        class="form-control"
+        id="floatingAddress"
+        required
+      />
+      <label for="floatingAddress">Address</label>
+    </div>
+    <div class="form-floating col-md-4">
+      <input
+        type="text"
+        name="city"
+        class="form-control"
+        id="floatingCity"
+        required
+      />
+      <label for="floatingCity">City</label>
+    </div>
+    <div class="form-floating col-md-4">
+      <input
+        type="text"
+        name="province"
+        class="form-control upperText"
+        id="floatingProvince"
+        minlength="2"
+        maxlength="2"
+        required
+      />
+      <label for="floatingProvince">Province</label>
+    </div>
+    <div class="form-floating col-md-4">
+      <input
+        type="text"
+        name="postalCode"
+        class="form-control upperText"
+        id="floatingPostal"
+        required
+        minlength="6"
+        maxlength="6"
+      />
+      <label for="floatingPostal">Postal Code</label>
+    </div>
+    <div class="form-floating">
+      <input
+        type="text"
+        name="country"
+        class="form-control upperText"
+        id="floatingCountry"
+        required
+      />
+      <label for="floatingCountry">Country</label>
+    </div>
+    <div class="form-floating">
+      <select class="form-control" id="floatingAgentId" name="agentId" required>
+        <option value="" disabled selected hidden>Pick an agent...</option>
+        <% agents.forEach(agent => { %>
+        <option value="<%= agent.AgentId %>">
+          <%= agent.AgentId + " - " + agent.AgtFirstName + " " +
+          agent.AgtLastName %>
+        </option>
+        <% }) %>
+      </select>
+      <label for="floatingAgentId">Agent ID</label>
+    </div>
+    <h4 class="h4 my-3">Account Details</h4>
+
+    <div class="form-floating col-md-4">
+      <input
+        type="text"
+        name="username"
+        class="form-control"
+        id="floatingUser"
+        required
+      />
+      <label for="floatingUser">Username</label>
+    </div>
+    <div class="form-floating col-md-4">
+      <input
+        type="password"
+        name="password"
+        class="form-control"
+        id="floatingPassword"
+        required
+      />
+      <label for="floatingPassword">Password</label>
+    </div>
+    <div class="form-floating col-md-4">
+      <input
+        type="confirmpassword"
+        name="confirmpassword"
+        class="form-control"
+        id="floatingConfirmPassword"
+        required
+      />
+      <label for="floatingPassword">Confirm Password</label>
+    </div>
+
+    <div class="row justify-content-center gap-2 py-3">
+      <button type="submit" class="btn btn-primary py-2 col-md-3">
+        Register
+      </button>
+      <button type="reset" class="btn btn-secondary py-2 col-md-3">
+        Reset
+      </button>
+    </div>
+  </form>
+</main>
 
 <%- include("includes/footer.ejs") %>
