@@ -4,7 +4,7 @@
       <div class="booking-form">
         <h2 class="text-center my-4">Travel Booking Form</h2>
 
-        <form action="/submit-booking" method="POST" onsubmit="">
+        <form action="/submit-booking" method="POST" onsubmit="return bookValidation()">
           <input
             type="hidden"
             name="packageId"
@@ -69,8 +69,6 @@
                 class="form-control"
                 id="firstName"
                 name="firstName"
-                maxlength="25"
-                required
               />
             </div>
             <div class="col-md-6">
@@ -80,8 +78,6 @@
                 class="form-control"
                 id="lastName"
                 name="lastName"
-                maxlength="25"
-                required
               />
             </div>
           </div>
@@ -93,8 +89,6 @@
               class="form-control"
               id="address"
               name="address"
-              maxlength="75"
-              required
             />
           </div>
 
@@ -106,8 +100,6 @@
                 class="form-control"
                 id="city"
                 name="city"
-                maxlength="50"
-                required
               />
             </div>
             <div class="col-md-3">
@@ -117,8 +109,6 @@
                 class="form-control"
                 id="province"
                 name="province"
-                maxlength="2"
-                required
               />
             </div>
             <div class="col-md-3">
@@ -128,8 +118,6 @@
                 class="form-control"
                 id="postalCode"
                 name="postalCode"
-                maxlength="7"
-                required
               />
             </div>
             <div class="col-md-3">
@@ -139,7 +127,6 @@
                 class="form-control"
                 id="country"
                 name="country"
-                maxlength="25"
               />
             </div>
           </div>
@@ -161,7 +148,6 @@
                 class="form-control"
                 id="busPhone"
                 name="busPhone"
-                required
               />
             </div>
           </div>
@@ -174,8 +160,6 @@
                 class="form-control"
                 id="email"
                 name="email"
-                maxlength="50"
-                required
               />
             </div>
           </div>

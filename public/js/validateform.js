@@ -7,14 +7,47 @@ Assignment: Node.js
 */
 
 // Define regex expressions for client-side form validation
+
+// Matches 1 number between 1-9
+const travelerRegex = /^[1-9]{1}$/;
+
 /* 
 Matches alphabetical strings that also contain spaces, dashes, and apostrophes
 The special characters cannot be leading or trailing characters
 */
-
-const travelerRegex = "";
-
 const nameRegex = /^([A-Za-z]{1,}([\.,] |[-']| )?)+[A-Za-z]+\.?\s*$/;
+
+/*
+Matches an alphanumeric string that can also contain apostrophes, spaces, periods and dashes
+String can be a maximum length of 75 characters
+*/
+const addressRegex = /^[A-Za-z0-9'.\s-]{1,50}$/;
+
+/*
+Matches an alphabetical string that can also contain apostrophes, spaces, periods and dashes
+String can be a maximum length of 50 characters
+*/
+const cityRegex = /^[A-Za-z'.\s-]{1,50}$/;
+
+/*
+Matches two character string using only valid starting and ending letters for Canadiian provinces
+*/
+const provRegex = /^[ABMNOPQSY][BCEKLNSTU]$/;
+
+/*
+Matches an alphanumeric string in the format of the Canadian postal code, using only valid letters
+Each half of the postal code must be separated by a space
+*/
+const postalRegex = /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ ]?\d[ABCEGHJ-NPRSTV-Z]\d$/i;
+
+// Matches a string of 1-50 alphabetical characters, including spaces, ampersands and dashes
+const countryRegex = /^[A-Za-z\&\s-]{1,50}$/;
+
+/*
+Matches 10 digit numeric strings, following North American phone number length
+Broken up into 3 capturing groups to allow for future data manipulation
+*/
+const phoneRegex = /^([0-9]{3})([0-9]{3})([0-9]{4})$/;
 
 /* 
 Matches alphanumeric strings that contain an apostrophe, underscore or dash
@@ -23,29 +56,11 @@ The last string must be alphabetical only, between 2-6 characters
 */
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
-/*
-Matches 10 digit numeric strings, following North American phone number length
-Broken up into 3 capturing groups to allow for future data manipulation
-*/
-const phoneRegex = /^([0-9]{3})([0-9]{3})([0-9]{4})$/;
+// Matches a string of 3-20 alphanumeric characters
+const userRegex = /^[A-Za-z0-9]{3,20}/;
 
-/*
-Matches an alphabetical string that can also contain apostrophes, spaces, periods and dashes
-String can be a maximum length of 45 characters
-*/
-const cityRegex = /^[A-Za-z'.\s-]{1,45}$/;
-
-/*
-Matches an alphanumeric string in the format of the Canadian postal code, using only valid letters
-Each half of the postal code must be separated by a space
-*/
-const postalRegex = /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ ]?\d[ABCEGHJ-NPRSTV-Z]\d$/i;
-
-/*
-Matches an alphanumeric string that can also contain apostrophes, ampersands, commas, spaces, periods and dashes
-String can be a maximum of 300 characters
-*/
-const feedbackRegex = /^[a-zA-Z0-9'&!,\s.-]{1,300}$/;
+// Matches a 8-16 character string that has at least one number and one of the below special character
+const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
 
 function regValidation() {
 
@@ -72,7 +87,7 @@ function regValidation() {
     if(!nameRegex.test(lastName.value)) {
         errorMsg += "Last name is invalid.\n";
     }
-    if(!cityRegex.test(address.value)) {
+    if(!addressRegex.test(address.value)) {
         errorMsg += "Address is invalid.\n";
     }
     if(!cityRegex.test(city.value)) {
@@ -80,14 +95,14 @@ function regValidation() {
         "It must only contain alphabetical characters or spaces " +
         "as well as [- or '] special characters\n";   
     }
-    if(!cityRegex.test(province.value)) {
+    if(!provRegex.test(province.value)) {
         errorMsg += "Province is invalid.\n";
     }
     if(!postalRegex.test(postal.value)) {
         errorMsg += "Postal code is invalid. " +
         "Ensure it is in the format 'T0A 0A0'.\n";
     }
-    if(!cityRegex.test(country.value)) {
+    if(!countryRegex.test(country.value)) {
         errorMsg += "Country is invalid.\n";
     }
     if(!phoneRegex.test(homePhone.value)) {
@@ -102,11 +117,12 @@ function regValidation() {
         errorMsg += "Email is invalid. "+ 
         "Ensure it is in the format 'me@example.com'.\n";
     }
-    if(!cityRegex.test(username.value)) {
+    if(!userRegex.test(username.value)) {
         errorMsg += "Username is invalid.\n";
     }
-    if(!cityRegex.test(password.value)) {
-        errorMsg += "Password is invalid.";
+    if(!passwordRegex.test(password.value)) {
+        errorMsg += "Password is invalid. " +
+        "Must contain at least 8 characters, 1 number and 1 symbol.";
     }
 
     // Check for errors
@@ -118,7 +134,7 @@ function regValidation() {
         // Displays applicable errors in browser alert
         alert(errorMsg);
         // Since there are errors, return false - form is not submitted
-        alert("Form was not submitted.");
+        alert("Registration was not submitted.");
         return false;
     }
 }
@@ -140,7 +156,8 @@ function bookValidation() {
     let errorMsg = "";
 
     if(!travelerRegex.test(numTravelers.value)) {
-        errorMsg += "Number of travelers is invalid.\n"
+        errorMsg += "Number of travelers is invalid. " +
+        "Please only enter a number between 1 and 9."
     }
     if(!nameRegex.test(firstName.value)) {
         errorMsg += "First name is invalid.\n";
@@ -148,7 +165,7 @@ function bookValidation() {
     if(!nameRegex.test(lastName.value)) {
         errorMsg += "Last name is invalid.\n";
     }
-    if(!cityRegex.test(address.value)) {
+    if(!addressRegex.test(address.value)) {
         errorMsg += "Address is invalid.\n";
     }
     if(!cityRegex.test(city.value)) {
@@ -188,7 +205,7 @@ function bookValidation() {
         // Displays applicable errors in browser alert
         alert(errorMsg);
         // Since there are errors, return false - form is not submitted
-        alert("Form was not submitted.");
+        alert("Booking was not submitted.");
         return false;
     }
 }

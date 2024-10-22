@@ -53,6 +53,15 @@ Assignment: HTML, CSS, JavaScript
                 <input type="text" name="country" class="form-control" id="floatingCountry" placeholder="Canada">
                 <label for="floatingCountry">Country</label>
             </div>
+            <div class="form-floating">
+                <select class="form-control" id="floatingAgentId" name="agentId">
+                <option value="" disabled selected hidden>Pick an agent...</option>
+                <% agents.forEach(agent => { %>
+                    <option value="<%= agent.AgentId %>"><%= agent.AgentId + " - " + agent.AgtFirstName + " " + agent.AgtLastName %></option>
+                <% }) %>
+                </select>
+                <label for="floatingAgentId">Agent ID</label>
+            </div>
             <h4 class="h4 my-3">Account Details</h4>
             <div class="form-floating col-md-6">
                 <input type="text" name="username" class="form-control" id="floatingUser" placeholder="John">

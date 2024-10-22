@@ -33,11 +33,8 @@ app.listen(port, () => {
 });
 
 db.connect((err) => {
-  if (err) {
-    throw err;
-  } else {
+  if (err) throw err;
     console.log("db connected");
-  }
 });
 
 //for / and home to used as same
@@ -53,12 +50,9 @@ app.get(["/", "/home"], (req, res) => {
   // const query = "SELECT * FROM packages;";
 
   db.query(query, (err, result) => {
-    if (err) {
-      throw err;
-    } else {
+    if (err) throw err;
       console.log(result);
       res.render("index", {pageTitle: "Home | Travel Experts", package: result });
-    }
   });
 });
 
@@ -68,13 +62,11 @@ app.get("/contact", (req, res) => {
   const agentQuery = "SELECT * from agents";
 
   db.query(agencyQuery, (err, agencyOut) => {
-    if (err) {
-      throw err;
-    } else {
+    if (err) throw err;
       db.query(agentQuery, (err, agentOut) => {
+        if (err) throw err;
         res.render("contact", {pageTitle: "Contact Us | Travel Experts", agencies: agencyOut, agents: agentOut});
-      });
-    }
+    });
   });
 });
 
@@ -85,14 +77,10 @@ app.get("/booking", (req, res) => {
   const agentQuery = "SELECT * FROM agents";
 
   db.query(query, [packageId],  (err, results) => {
-    if (err) {
-      throw err;
-    }
-    else {
+    if (err) throw err;
       db.query(agentQuery, (err, agentOut) => {
-        res.render("booking", {pageTitle: "Booking Form | Travel Experts", package: results[0], agents: agentOut });
-      });
-    }
+       res.render("booking", {pageTitle: "Booking Form | Travel Experts", package: results[0], agents: agentOut });
+    });
   });
 });
 
@@ -166,8 +154,11 @@ app.post("/submit-booking", async (req, res) => {
 });
 
 // Endpoint to serve registration page
-app.get("/register", (req, res) => {
-  res.render("register", {pageTitle: "Register | Travel Experts"});
+app.get("/register", async(req, res) => {
+  const agentQuery = "SELECT * FROM agents";
+  db.query(agentQuery, (err, agentOut) => { 
+    res.render("register", {pageTitle: "Register | Travel Experts", agents: agentOut});
+  });
 });
 
 // Endpoint to handle registration submissions
@@ -184,11 +175,12 @@ app.post("/submit-registration", async(req, res) => {
     postalCode,
     country,
     username,
-    password
+    password,
+    agentId,
   } = req.body
   const registerCustomer = `
-    INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, CustUserNm, CustPassword)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, AgentId)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
   const customerInput = [
     firstName,
@@ -198,17 +190,14 @@ app.post("/submit-registration", async(req, res) => {
     province,
     postalCode,
     country,
-    province,
-    postalCode,
-    country,
     homePhone,
     busPhone,
     email,
-    username,
-    password
+    agentId,
   ];
-  db.query(registerCustomer, customerInput)
-  res.render("register", {pageTitle: "Register | Travel Experts"})
+  await db.promise().query(registerCustomer, customerInput)
+  console.log(agentId)
+  res.render("thankregister");
 });
 
 // Create generic endpoint to serve error for invalid requests
