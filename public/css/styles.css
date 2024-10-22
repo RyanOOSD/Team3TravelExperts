@@ -19,7 +19,7 @@ Assignment: HTML, CSS, JavaScript
 }
 @media screen and (max-width: 991px) {
   body {
-    padding-top: 171px; 
+    padding-top: 171px;
   }
 }
 
@@ -67,3 +67,7 @@ Assignment: HTML, CSS, JavaScript
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 } */
+
+.upperText {
+  text-transform: uppercase;
+}

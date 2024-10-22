@@ -5,11 +5,7 @@
     <h2 class="text-center my-4">Travel Booking Form</h2>
 
     ~
-    <form
-      action="/submit-booking"
-      method="POST"
-      onsubmit="return bookValidation()"
-    >
+    <form action="/submit-booking" method="POST" class="needs-validation">
       <input
         type="hidden"
         name="packageId"
@@ -63,16 +59,29 @@
         </div>
       </div>
       <div class="row">
-        <div>
+        <div class="col-md-6">
           <label for="travelerCountId" class="form-label"
             >Number of Travellers</label
           >
           <input
             type="number"
+            required
             name="travelerCount"
             class="form-control"
             id="travelerCountId"
+            value="1"
+            min="1"
           />
+        </div>
+        <div class="col-md-6">
+          <label for="tripType" class="form-label"> Trip Type</label>
+          <select name="tripType" class="form-control" id="tripType" required>
+            <!-- dummy option for validation -->
+            <option></option>
+            <option value="L">Leasure</option>
+            <option value="B">Business</option>
+            <option value="G">Group</option>
+          </select>
         </div>
       </div>
 
@@ -86,6 +95,7 @@
             class="form-control"
             id="firstNameId"
             name="firstName"
+            required
           />
         </div>
         <div class="col-md-6">
@@ -95,47 +105,65 @@
             class="form-control"
             id="lastNameId"
             name="lastName"
+            required
           />
         </div>
       </div>
 
       <div class="mb-3">
         <label for="addressId" class="form-label">Address</label>
-        <input type="text" class="form-control" id="addressId" name="address" />
+        <input
+          type="text"
+          class="form-control"
+          id="addressId"
+          name="address"
+          required
+        />
       </div>
 
       <div class="row mb-3">
         <div class="col-md-3">
           <label for="cityId" class="form-label">City</label>
-          <input type="text" class="form-control" id="cityId" name="city" />
+          <input
+            type="text"
+            class="form-control"
+            id="cityId"
+            name="city"
+            required
+          />
         </div>
         <div class="col-md-3">
           <label for="provinceId" class="form-label">Province</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control upperText"
             id="provinceId"
             name="province"
+            required
+            minlength="2"
             maxlength="2"
-            style="text-transform: uppercase"
           />
         </div>
         <div class="col-md-3">
           <label for="postalCodeId" class="form-label">Postal Code</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control upperText"
             id="postalCodeId"
             name="postalCode"
+            required
+            minlength="6"
+            maxlength="6"
           />
         </div>
         <div class="col-md-3">
           <label for="countryId" class="form-label">Country</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control upperText"
             id="countryId"
             name="country"
+            required
           />
         </div>
       </div>
@@ -147,7 +175,9 @@
             type="tel"
             class="form-control"
             id="homePhoneId"
+            required
             name="homePhone"
+            minlength="10"
             maxlength="10"
           />
         </div>
@@ -158,6 +188,8 @@
             class="form-control"
             id="busPhoneId"
             name="busPhone"
+            required
+            minlength="10"
             maxlength="10"
           />
         </div>
@@ -166,13 +198,19 @@
       <div class="row mb-3">
         <div class="col-md-12">
           <label for="emailId" class="form-label">Email</label>
-          <input type="email" class="form-control" id="emailId" name="email" />
+          <input
+            type="email"
+            class="form-control"
+            id="emailId"
+            name="email"
+            required
+          />
         </div>
       </div>
 
       <div class="mb-3">
         <label for="agentId" class="form-label">Agent ID</label>
-        <select class="form-control" id="agentId" name="agentId">
+        <select class="form-control" id="agentId" name="agentId" required>
           <option value="" disabled selected hidden></option>
           <% agents.forEach(agent => { %>
           <option value="<%= agent.AgentId %>">
