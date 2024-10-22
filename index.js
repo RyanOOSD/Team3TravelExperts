@@ -15,6 +15,7 @@ app.use(express.static(path.join(appDir, "public")));
 
 //for req body
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // app.set('views', path.join(__dirname, 'views'));
 // .. moves 1 dir up where util folders present
@@ -77,10 +78,13 @@ app.get("/booking", (req, res) => {
   const packageId = req.query.id;
   console.log(packageId);
   const query = "SELECT * FROM packages WHERE PackageId = ?";
+  const agentQuery = "SELECT * FROM agents";
 
-  db.query(query, [packageId], (err, results) => {
+  db.query(query, [packageId],  (err, results) => {
     if (err) throw err;
-    res.render("booking", {package: results[0] });
+      db.query(agentQuery, (err, agentOut) => {
+        res.render("booking", {pageTitle: "Booking Form | Travel Experts", package: results[0], agents: agentOut });
+      })
   });
 });
 
@@ -99,21 +103,19 @@ app.post("/submit-booking", async (req, res) => {
     homePhone,
     busPhone,
     email,
+    agentId,
   } = req.body;
 
   try {
-    const customerId = generateNo();
-    const bookingId = generateNo();
     const bookingNo = generateNo();
     const tripType = "L"; // Fixed value for leisure trip
 
     // Insert customer into `customers` table
     const customerQuery = `
-      INSERT INTO customers (CustomerId, CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail)
+      INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, AgentId)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const customerValues = [
-      customerId,
       firstName,
       lastName,
       address,
@@ -124,17 +126,21 @@ app.post("/submit-booking", async (req, res) => {
       homePhone,
       busPhone,
       email,
+      agentId,
     ];
     //You have tried to call .then(), .catch(), or invoked await on the result of query that is not a promise, which is a programming error. Try calling con.promise().query(),
     await db.promise().query(customerQuery, customerValues);
 
+    // Get the customer that was just created and input the ID into the booking table
+    const newCustomer = "SELECT CustomerId FROM customers ORDER BY CustomerID DESC LIMIT 1";
+    const newId = await db.promise().query(newCustomer);
+    const customerId = JSON.stringify(newId[0][0].CustomerId);
     // Insert booking into `bookings` table
     const bookingQuery = `
-      INSERT INTO bookings (BookingId, BookingDate, BookingNo, TravelerCount, CustomerId, TripTypeId, PackageId)
-      VALUES (?, NOW(), ?, ?, ?, ?, ?)
+      INSERT INTO bookings (BookingDate, BookingNo, TravelerCount, CustomerId, TripTypeId, PackageId)
+      VALUES (NOW(), ?, ?, ?, ?, ?)
     `;
     const bookingValues = [
-      bookingId,
       bookingNo,
       travelerCount,
       customerId,
@@ -144,7 +150,7 @@ app.post("/submit-booking", async (req, res) => {
     await db.promise().query(bookingQuery, bookingValues);
 
     console.log("Booking and customer data saved successfully");
-    res.render("thankyou");
+    res.render("thankbook");
   } catch (error) {
     console.error("Error saving data:", error);
     res.status(500).send("Error processing booking.");

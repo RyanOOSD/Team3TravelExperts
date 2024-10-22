@@ -17,6 +17,11 @@ Assignment: HTML, CSS, JavaScript
     padding-top: 171px;
   }
 }
+@media screen and (max-width: 991px) {
+  body {
+    padding-top: 171px; 
+  }
+}
 
 /* Increase the size of the shadow on card text */
 .text-shadow-1 {
@@ -53,3 +58,12 @@ Assignment: HTML, CSS, JavaScript
   background: linear-gradient(to bottom right, #4a00e0, #8e2de2);
   border-radius: 15px;
 }
+
+/* .booking-form {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+} */
