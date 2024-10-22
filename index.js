@@ -59,14 +59,17 @@ app.get(["/", "/home"], (req, res) => {
 // gets the agent contact details to contact page
 app.get("/contact", (req, res) => {
   const agencyQuery = "SELECT * FROM agencies"
-  const agentQuery = "SELECT * from agents";
+  const agentQuery = "SELECT * from agents WHERE AgencyId = 1";
+  const agentTwoQuery = "SELECT * from agents WHERE AgencyId = 2";
 
   db.query(agencyQuery, (err, agencyOut) => {
     if (err) throw err;
       db.query(agentQuery, (err, agentOut) => {
         if (err) throw err;
-        res.render("contact", {pageTitle: "Contact Us | Travel Experts", agencies: agencyOut, agents: agentOut});
-    });
+          db.query(agentTwoQuery, (err, agentTwoOut) => {
+            res.render("contact", {pageTitle: "Contact Us | Travel Experts", agencies: agencyOut, agents: agentOut, agentTwo: agentTwoOut});
+          });
+      });
   });
 });
 
