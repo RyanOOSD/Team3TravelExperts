@@ -8,6 +8,7 @@
           <input
             type="hidden"
             name="packageId"
+            id="packageNumId"
             value="<%= package.PackageId %>"
           />
           <!-- Package Details Section (Disabled) -->
@@ -17,6 +18,7 @@
               <input
                 type="text"
                 class="form-control"
+                id="packageNameId"
                 value="<%= package.PkgName %>"
                 disabled
               />
@@ -26,6 +28,7 @@
               <input
                 type="text"
                 class="form-control"
+                id="packagePriceId"
                 value="$<%= package.PkgBasePrice %>"
                 disabled
               />
@@ -38,6 +41,7 @@
               <input
                 type="text"
                 class="form-control"
+                id="packageStartId"
                 value="<%= new Date(package.PkgStartDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>"
                 disabled
               />
@@ -47,6 +51,7 @@
               <input
                 type="text"
                 class="form-control"
+                id="packageEndId"
                 value="<%= new Date(package.PkgEndDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>"
                 disabled
               />
@@ -54,8 +59,8 @@
           </div>
           <div class="row">
             <div>
-              <label class="form-label">Number of Travellers</label>
-              <input type="number" name="travelerCount" class="form-control">
+              <label for="travelerCountId" class="form-label">Number of Travellers</label>
+              <input type="number" name="travelerCount" class="form-control" id="travelerCountId">
             </div>
           </div>
 
@@ -63,69 +68,69 @@
           <h5 class="mt-4">Customer Information</h5>
           <div class="row mb-3">
             <div class="col-md-6">
-              <label for="firstName" class="form-label">First Name</label>
+              <label for="firstNameId" class="form-label">First Name</label>
               <input
                 type="text"
                 class="form-control"
-                id="firstName"
+                id="firstNameId"
                 name="firstName"
               />
             </div>
             <div class="col-md-6">
-              <label for="lastName" class="form-label">Last Name</label>
+              <label for="lastNameId" class="form-label">Last Name</label>
               <input
                 type="text"
                 class="form-control"
-                id="lastName"
+                id="lastNameId"
                 name="lastName"
               />
             </div>
           </div>
 
           <div class="mb-3">
-            <label for="address" class="form-label">Address</label>
+            <label for="addressId" class="form-label">Address</label>
             <input
               type="text"
               class="form-control"
-              id="address"
+              id="addressId"
               name="address"
             />
           </div>
 
           <div class="row mb-3">
             <div class="col-md-3">
-              <label for="city" class="form-label">City</label>
+              <label for="cityId" class="form-label">City</label>
               <input
                 type="text"
                 class="form-control"
-                id="city"
+                id="cityId"
                 name="city"
               />
             </div>
             <div class="col-md-3">
-              <label for="province" class="form-label">Province</label>
+              <label for="provinceId" class="form-label">Province</label>
               <input
                 type="text"
                 class="form-control"
-                id="province"
+                id="provinceId"
                 name="province"
               />
             </div>
             <div class="col-md-3">
-              <label for="postalCode" class="form-label">Postal Code</label>
+              <label for="postalCodeId" class="form-label">Postal Code</label>
               <input
                 type="text"
                 class="form-control"
-                id="postalCode"
+                id="postalCodeId"
                 name="postalCode"
               />
             </div>
             <div class="col-md-3">
-              <label for="country" class="form-label">Country</label>
+              <label for="countryId" class="form-label">Country</label>
               <input
                 type="text"
                 class="form-control"
-                id="country"
+                id="countryId"
                 name="country"
               />
             </div>
@@ -133,20 +138,20 @@
 
           <div class="row mb-3">
             <div class="col-md-6">
-              <label for="homePhone" class="form-label">Home Phone</label>
+              <label for="homePhoneId" class="form-label">Home Phone</label>
               <input
                 type="tel"
                 class="form-control"
-                id="homePhone"
+                id="homePhoneId"
                 name="homePhone"
               />
             </div>
             <div class="col-md-6">
-              <label for="busPhone" class="form-label">Business Phone</label>
+              <label for="busPhoneId" class="form-label">Business Phone</label>
               <input
                 type="tel"
                 class="form-control"
-                id="busPhone"
+                id="busPhoneId"
                 name="busPhone"
               />
             </div>
@@ -154,11 +159,11 @@
 
           <div class="row mb-3">
             <div class="col-md-12">
-              <label for="email" class="form-label">Email</label>
+              <label for="emailId" class="form-label">Email</label>
               <input
                 type="email"
                 class="form-control"
-                id="email"
+                id="emailId"
                 name="email"
               />
             </div>

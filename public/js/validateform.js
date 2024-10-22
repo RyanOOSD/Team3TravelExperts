@@ -21,7 +21,7 @@ const nameRegex = /^([A-Za-z]{1,}([\.,] |[-']| )?)+[A-Za-z]+\.?\s*$/;
 Matches an alphanumeric string that can also contain apostrophes, spaces, periods and dashes
 String can be a maximum length of 75 characters
 */
-const addressRegex = /^[A-Za-z0-9'.\s-]{1,50}$/;
+const addressRegex = /^[A-Za-z0-9'.\s-]{1,75}$/;
 
 /*
 Matches an alphabetical string that can also contain apostrophes, spaces, periods and dashes
@@ -93,7 +93,7 @@ function regValidation() {
     if(!cityRegex.test(city.value)) {
         errorMsg += "City is invalid. " +
         "It must only contain alphabetical characters or spaces " +
-        "as well as [- or '] special characters\n";   
+        "as well as [- . or '] special characters\n";   
     }
     if(!provRegex.test(province.value)) {
         errorMsg += "Province is invalid.\n";
@@ -141,23 +141,43 @@ function regValidation() {
 
 function bookValidation() {
 
-    const numTravelers = document.querySelector("#travelerCount");
-    const firstName = document.querySelector("#firstName");
-    const lastName = document.querySelector("#lastName");
-    const address = document.querySelector("#address");
-    const city = document.querySelector("#city");
-    const province = document.querySelector("province");
-    const postal = document.querySelector("#postalCode");
-    const country = document.querySelector("#country");
-    const homePhone = document.querySelector("#homePhone");
-    const busPhone = document.querySelector("#busPhone");
-    const email = document.querySelector("#email");
+    const pkgId = document.querySelector("#packageNumId");
+    const pkgName = document.querySelector("packageNameId");
+    const pkgPrice = document.querySelector("packagePriceId");
+    const pkgStart = document.querySelector("packageStartId");
+    const pkgEnd = document.querySelector("packageEndId");
+    const numTravelers = document.querySelector("#travelerCountId");
+    const firstName = document.querySelector("#firstNameId");
+    const lastName = document.querySelector("#lastNameId");
+    const address = document.querySelector("#addressId");
+    const city = document.querySelector("#cityId");
+    const province = document.querySelector("#provinceId");
+    const postal = document.querySelector("#postalCodeId");
+    const country = document.querySelector("#countryId");
+    const homePhone = document.querySelector("#homePhoneId");
+    const busPhone = document.querySelector("#busPhoneId");
+    const email = document.querySelector("#emailId");
 
     let errorMsg = "";
 
+    if(pkgId == "") {
+        errorMsg += "Invalid package form.";
+    }
+    if(pkgName == "") {
+        errorMsg += "Invalid package name.";
+    }
+    if(pkgPrice == "") {
+        errorMsg += "Invalid package price.";
+    }
+    if(pkgStart == "") {
+        errorMsg += "Invalid package start.";
+    }
+    if(pkgEnd == "") {
+        errorMsg += "Invalid package end.";
+    }
     if(!travelerRegex.test(numTravelers.value)) {
         errorMsg += "Number of travelers is invalid. " +
-        "Please only enter a number between 1 and 9."
+        "Please only enter a number between 1 and 9.\n";
     }
     if(!nameRegex.test(firstName.value)) {
         errorMsg += "First name is invalid.\n";
@@ -171,16 +191,16 @@ function bookValidation() {
     if(!cityRegex.test(city.value)) {
         errorMsg += "City is invalid. " +
         "It must only contain alphabetical characters or spaces " +
-        "as well as [- or '] special characters\n";   
+        "as well as [- . or '] special characters\n";   
     }
-    if(!cityRegex.test(province.value)) {
+    if(!provRegex.test(province.value)) {
         errorMsg += "Province is invalid.\n";
     }
     if(!postalRegex.test(postal.value)) {
         errorMsg += "Postal code is invalid. " +
         "Ensure it is in the format 'T0A 0A0'.\n";
     }
-    if(!cityRegex.test(country.value)) {
+    if(!countryRegex.test(country.value)) {
         errorMsg += "Country is invalid.\n";
     }
     if(!phoneRegex.test(homePhone.value)) {

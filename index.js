@@ -179,8 +179,8 @@ app.post("/submit-registration", async(req, res) => {
     agentId,
   } = req.body
   const registerCustomer = `
-    INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, AgentId)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, CustUser, CustPass, AgentId)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
   const customerInput = [
     firstName,
@@ -193,6 +193,8 @@ app.post("/submit-registration", async(req, res) => {
     homePhone,
     busPhone,
     email,
+    username,
+    password,
     agentId,
   ];
   await db.promise().query(registerCustomer, customerInput)
