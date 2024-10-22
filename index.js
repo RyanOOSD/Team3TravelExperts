@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const port = 3000;
 const appDir = path.dirname(require.main.filename);
+const { body, validationResult } = require("express-validator");
 
 /// Set the view engine to EJS
 app.set("view engine", "ejs");
@@ -87,34 +88,40 @@ app.get("/booking", (req, res) => {
   });
 });
 
-app.post("/submit-booking", async (req, res) => {
-  console.log("submit-booking", req.body);
-  const {
-    travelerCount,
-    packageId,
-    firstName,
-    lastName,
-    address,
-    city,
-    province,
-    postalCode,
-    country,
-    homePhone,
-    busPhone,
-    email,
-    agentId,
-  } = req.body;
+app.post(
+  "/submit-booking",
+  [
+    [
+      body("travelerCount", "Invalid traveler count").isNumeric().isLength({max: 1}),
+      body("packageId", "Invalid package ID").isNumeric().isLength({max: 1}),
+      body("firstName", "Invalid first name").isAlpha("en-US", {ignore: "\s.-'"}).isLength({max: 25}),
+      body("lastName", "Invalid last name").isAlpha("en-US", {ignore: "\s.-'"}).isLength({max: 25}),
+      body("address", "Invalid address").isAlphanumeric("en-US", {ignore: "\s.-'"}).isLength({max: 75}),
+      body("city", "Invalid city").isAlpha("en-US", {ignore: "\s.-'"}).isLength({max: 50}),
+      body("province", "Invalid province").isAlpha().isLength({max: 2}),
+      body("postalCode", "Invalid postal code").isAlphanumeric("en-US", {ignore: "\s"}).isLength({max: 7}),
+      body("country", "Invalid country").isAlpha("en-US", {ignore: "\&\s-'"}).isLength({max: 25}),
+      body("homePhone", "Invalid home phone").isNumeric().isLength({max: 20}),
+      body("busPhone", "Invalid business phone").isNumeric().isLength({max: 20}),
+      body("email", "Invalid email").isEmail().isLength({max: 50}),
+      body('agentId', "Invalid agent").isNumeric().isLength({max: 1}),
+    ],
+  ],
+  async (req, res) => {
+    console.log("submit-booking", req.body);
+    const error = validationResult(req);
+    const pullErr = validationResult.withDefaults({
+        formatter: error => error.msg,
+    });
+    const printErr = pullErr(req).array();
 
-  try {
-    const bookingNo = generateNo();
-    const tripType = "L"; // Fixed value for leisure trip
+    if (!error.isEmpty()) {
+      return res.render("badform", {pageTitle: "Invalid form!", badSubmit: printErr});
+    }
 
-    // Insert customer into `customers` table
-    const customerQuery = `
-      INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, AgentId)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-    const customerValues = [
+    const {
+      travelerCount,
+      packageId,
       firstName,
       lastName,
       address,
@@ -126,35 +133,59 @@ app.post("/submit-booking", async (req, res) => {
       busPhone,
       email,
       agentId,
-    ];
-    //You have tried to call .then(), .catch(), or invoked await on the result of query that is not a promise, which is a programming error. Try calling con.promise().query(),
-    await db.promise().query(customerQuery, customerValues);
+    } = req.body;
 
-    // Get the customer that was just created and input the ID into the booking table
-    const newCustomer = "SELECT CustomerId FROM customers ORDER BY CustomerID DESC LIMIT 1";
-    const newId = await db.promise().query(newCustomer);
-    const customerId = JSON.stringify(newId[0][0].CustomerId);
-    // Insert booking into `bookings` table
-    const bookingQuery = `
-      INSERT INTO bookings (BookingDate, BookingNo, TravelerCount, CustomerId, TripTypeId, PackageId)
-      VALUES (NOW(), ?, ?, ?, ?, ?)
-    `;
-    const bookingValues = [
-      bookingNo,
-      travelerCount,
-      customerId,
-      tripType,
-      packageId,
-    ];
-    await db.promise().query(bookingQuery, bookingValues);
+    try {
+      const bookingNo = generateNo();
+      const tripType = "L"; // Fixed value for leisure trip
 
-    console.log("Booking and customer data saved successfully");
-    res.render("thankbook");
-  } catch (error) {
-    console.error("Error saving data:", error);
-    res.status(500).send("Error processing booking.");
+      // Insert customer into `customers` table
+      const customerQuery = `
+        INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, AgentId)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+      const customerValues = [
+        firstName,
+        lastName,
+        address,
+        city,
+        province,
+        postalCode,
+        country,
+        homePhone,
+        busPhone,
+        email,
+        agentId,
+      ];
+      //You have tried to call .then(), .catch(), or invoked await on the result of query that is not a promise, which is a programming error. Try calling con.promise().query(),
+      await db.promise().query(customerQuery, customerValues);
+
+      // Get the customer that was just created and input the ID into the booking table
+      const newCustomer = "SELECT CustomerId FROM customers ORDER BY CustomerID DESC LIMIT 1";
+      const newId = await db.promise().query(newCustomer);
+      const customerId = JSON.stringify(newId[0][0].CustomerId);
+      // Insert booking into `bookings` table
+      const bookingQuery = `
+        INSERT INTO bookings (BookingDate, BookingNo, TravelerCount, CustomerId, TripTypeId, PackageId)
+        VALUES (NOW(), ?, ?, ?, ?, ?)
+      `;
+      const bookingValues = [
+        bookingNo,
+        travelerCount,
+        customerId,
+        tripType,
+        packageId,
+      ];
+      await db.promise().query(bookingQuery, bookingValues);
+
+      console.log("Booking and customer data saved successfully");
+      res.render("thankbook");
+    } catch (error) {
+      console.error("Error saving data:", error);
+      res.status(500).send("Error processing booking.");
+    }
   }
-});
+);
 
 // Endpoint to serve registration page
 app.get("/register", async(req, res) => {
@@ -165,45 +196,74 @@ app.get("/register", async(req, res) => {
 });
 
 // Endpoint to handle registration submissions
-app.post("/submit-registration", async(req, res) => {
-  const { 
-    firstName,
-    lastName,
-    email,
-    homePhone,
-    busPhone,
-    address,
-    city,
-    province,
-    postalCode,
-    country,
-    username,
-    password,
-    agentId,
-  } = req.body
-  const registerCustomer = `
-    INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, CustUser, CustPass, AgentId)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `;
-  const customerInput = [
-    firstName,
-    lastName,
-    address,
-    city,
-    province,
-    postalCode,
-    country,
-    homePhone,
-    busPhone,
-    email,
-    username,
-    password,
-    agentId,
-  ];
-  await db.promise().query(registerCustomer, customerInput)
-  console.log(agentId)
-  res.render("thankregister");
-});
+app.post(
+  "/submit-registration",
+  [
+    [
+      body("firstName", "Invalid first name").isAlpha("en-US", {ignore: "\s.-'"}).isLength({max: 25}),
+      body("lastName", "Invalid last name").isAlpha("en-US", {ignore: "\s.-'"}).isLength({max: 25}),
+      body("address", "Invalid address").isAlphanumeric("en-US", {ignore: "\s.-'"}).isLength({max: 75}),
+      body("city", "Invalid city").isAlpha("en-US", {ignore: "\s.-'"}).isLength({max: 50}),
+      body("province", "Invalid province").isAlpha().isLength({max: 2}),
+      body("postalCode", "Invalid postal code").isAlphanumeric("en-US", {ignore: "\s"}).isLength({max: 7}),
+      body("country", "Invalid country").isAlpha("en-US", {ignore: "\&\s-'"}).isLength({max: 25}),
+      body("homePhone", "Invalid home phone").isNumeric().isLength({max: 20}),
+      body("busPhone", "Invalid business phone").isNumeric().isLength({max: 20}),
+      body("email", "Invalid email").isEmail().isLength({max: 50}),
+      body("username", "Invalid username").isAlphanumeric().isLength({min: 3, max: 20}),
+      body("password", "Invalid password").isAlphanumeric("en-US", {ignore: "!@#$%^&*"}).isLength({min: 8, max: 24}),
+      body('agentId', "Invalid agent").isNumeric().isLength({max: 1}),
+    ],
+  ],
+  async(req, res) => {
+    const error = validationResult(req);
+    const pullErr = validationResult.withDefaults({
+        formatter: error => error.msg,
+    });
+    const printErr = pullErr(req).array();
+
+    if (!error.isEmpty()) {
+      return res.render("badform", {pageTitle: "Invalid form!", badSubmit: printErr});
+    }
+    const { 
+      firstName,
+      lastName,
+      email,
+      homePhone,
+      busPhone,
+      address,
+      city,
+      province,
+      postalCode,
+      country,
+      username,
+      password,
+      agentId,
+    } = req.body
+    const registerCustomer = `
+      INSERT INTO customers (CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, CustUser, CustPass, AgentId)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    const customerInput = [
+      firstName,
+      lastName,
+      address,
+      city,
+      province,
+      postalCode,
+      country,
+      homePhone,
+      busPhone,
+      email,
+      username,
+      password,
+      agentId,
+    ];
+    await db.promise().query(registerCustomer, customerInput)
+    console.log(agentId)
+    res.render("thankregister");
+  }
+);
 
 // Create generic endpoint to serve error for invalid requests
 app.use((req, res) => {

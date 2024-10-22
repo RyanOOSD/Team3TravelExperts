@@ -40,8 +40,8 @@ Each half of the postal code must be separated by a space
 */
 const postalRegex = /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ ]?\d[ABCEGHJ-NPRSTV-Z]\d$/i;
 
-// Matches a string of 1-50 alphabetical characters, including spaces, ampersands and dashes
-const countryRegex = /^[A-Za-z\&\s-]{1,50}$/;
+// Matches a string of 1-50 alphabetical characters, including spaces, apostrophes, ampersands and dashes
+const countryRegex = /^[A-Za-z'\&\s-]{1,50}$/;
 
 /*
 Matches 10 digit numeric strings, following North American phone number length
@@ -59,8 +59,8 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 // Matches a string of 3-20 alphanumeric characters
 const userRegex = /^[A-Za-z0-9]{3,20}/;
 
-// Matches a 8-16 character string that has at least one number and one of the below special character
-const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
+// Matches a 8-24 character string that has at least one number and one of the below special character
+const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,24}$/;
 
 function regValidation() {
 
