@@ -11,6 +11,9 @@ Assignment: Node.js
 Matches alphabetical strings that also contain spaces, dashes, and apostrophes
 The special characters cannot be leading or trailing characters
 */
+
+const travelerRegex = "";
+
 const nameRegex = /^([A-Za-z]{1,}([\.,] |[-']| )?)+[A-Za-z]+\.?\s*$/;
 
 /* 
@@ -136,6 +139,9 @@ function bookValidation() {
 
     let errorMsg = "";
 
+    if(!travelerRegex.test(numTravelers.value)) {
+        errorMsg += "Number of travelers is invalid.\n"
+    }
     if(!nameRegex.test(firstName.value)) {
         errorMsg += "First name is invalid.\n";
     }

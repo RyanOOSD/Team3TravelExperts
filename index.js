@@ -15,6 +15,8 @@ app.use(express.static(path.join(appDir, "public")));
 
 //for req body
 app.use(express.urlencoded({ extended: true }));
+
+// Allow express to handle JSON for validation
 app.use(express.json());
 
 // app.set('views', path.join(__dirname, 'views'));
@@ -43,10 +45,10 @@ app.get(["/", "/home"], (req, res) => {
   // this returns the basic detils from packages and with seperate date that splits as
   // date month and year for start and end of the package.
   const query =
-    "SELECT PackageId,PkgName,PkgDesc,PkgBasePrice,\
-		day(PkgStartDate) as startDay, month(PkgStartDate) as startMonth, year(PkgStartDate) as startYear,\
-    day(PkgEndDate) as endDay, month(PkgEndDate) endMonth, year(PkgEndDate) as endYear\
-    FROM packages where PkgStartDate> NOW()";
+    "SELECT PackageId, PkgName, PkgDesc, TRUNCATE(PkgBasePrice, 2) AS PkgBasePrice,\
+		day(PkgStartDate) AS startDay, month(PkgStartDate) AS startMonth, year(PkgStartDate) AS startYear,\
+    day(PkgEndDate) AS endDay, month(PkgEndDate) endMonth, year(PkgEndDate) AS endYear\
+    FROM packages WHERE PkgStartDate> NOW()";
 
   // const query = "SELECT * FROM packages;";
 
@@ -62,14 +64,16 @@ app.get(["/", "/home"], (req, res) => {
 
 // gets the agent contact details to contact page
 app.get("/contact", (req, res) => {
-  const query = "select * from agents";
+  const agencyQuery = "SELECT * FROM agencies"
+  const agentQuery = "SELECT * from agents";
 
-  db.query(query, (err, result) => {
+  db.query(agencyQuery, (err, agencyOut) => {
     if (err) {
       throw err;
     } else {
-      console.log(result);
-      res.render("contact", {pageTitle: "Contact Us | Travel Experts", agents: result });
+      db.query(agentQuery, (err, agentOut) => {
+        res.render("contact", {pageTitle: "Contact Us | Travel Experts", agencies: agencyOut, agents: agentOut});
+      });
     }
   });
 });
@@ -81,10 +85,14 @@ app.get("/booking", (req, res) => {
   const agentQuery = "SELECT * FROM agents";
 
   db.query(query, [packageId],  (err, results) => {
-    if (err) throw err;
+    if (err) {
+      throw err;
+    }
+    else {
       db.query(agentQuery, (err, agentOut) => {
         res.render("booking", {pageTitle: "Booking Form | Travel Experts", package: results[0], agents: agentOut });
-      })
+      });
+    }
   });
 });
 
