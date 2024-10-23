@@ -43,8 +43,9 @@ Assignment: HTML, CSS, JavaScript
             </div>
             <div class="form-floating col-md-4">
                 <!-- Creating a dropdown list for options -->
-                <select list="province" name="province" class="form-control" id="floatingProvince" placeholder="Alberta">
-                <datalist id="province">
+                <select list="province" name="province" class="form-control" id="floatingProvince">
+                <datalist id="province" name="province">
+                    <option value="Blank">Please Choose a Province...</option>
                     <option value="Alberta">Alberta</option>
                     <option value="Saskatchewan">Saskatchewan</option>
                     <option value="British Columbia">British Columbia</option>
@@ -55,6 +56,7 @@ Assignment: HTML, CSS, JavaScript
                     <option value="New Brunswick">New Brunswick</option>
                     <option value="Prince Edward Island">Prince Edward Island</option>
                 </datalist>
+                </select>
                 <label for="floatingProvince">Province</label>
             </div>
             <div class="form-floating col-md-4">
