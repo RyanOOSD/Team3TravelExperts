@@ -26,12 +26,12 @@ Assignment: HTML, CSS, JavaScript
                 <label for="floatingEmail">Email address</label>
             </div>
             <div class="form-floating">
-                <input type="text" name="homePhone" class="form-control" id="floatingHPhone" placeholder="(555) 555-5555"> 
-                <label for="floatingHPhone">Home Phone</label>
+                <input type="text" name="homePhone" class="form-control" id="floatingHPhone" placeholder="(555) 555-5555" onfocus="document.getElementById('HPhone').innerText = 'Enter your Home Phone number as (### ###-####)'" onblur="document.getElementById('HPhone').innerText = 'Home Phone'"> 
+                <label for="floatingHPhone" id="HPhone">Home Phone</label>
             </div>
             <div class="form-floating">
-                <input type="text" name="busPhone" class="form-control" id="floatingBPhone" placeholder="(555) 555-5555"> 
-                <label for="floatingBPhone">Business Phone</label>
+                <input type="text" name="busPhone" class="form-control" id="floatingBPhone" placeholder="(555) 555-5555" onfocus="document.getElementById('BPhone').innerText = 'Enter your Business Phone number as (### ###-####)'" onblur="document.getElementById('BPhone').innerText = 'Business Phone'"> 
+                <label for="floatingBPhone" id="BPhone">Business Phone</label>
             </div>
             <div class="form-floating">
                 <input type="text" name="address" class="form-control" id="floatingAddress" placeholder="Address">
@@ -60,8 +60,8 @@ Assignment: HTML, CSS, JavaScript
                 <label for="floatingProvince">Province</label>
             </div>
             <div class="form-floating col-md-4">
-                <input type="text" name="postalCode" class="form-control" id="floatingPostal" placeholder="T2C 5P6">
-                <label for="floatingPostal">Postal Code</label>
+                <input type="text" name="postalCode" class="form-control" id="floatingPostal" placeholder="T2C 5P6" onfocus="document.getElementById('Postal').innerText = 'Your Postal Code should be similar to T2C 5P6'" onblur="document.getElementById('Postal').innerText = 'Postal Code'">
+                <label for="floatingPostal" id="Postal">Postal Code</label>
             </div>
             <div class="form-floating">
                 <input type="text" name="country" class="form-control" id="floatingCountry" placeholder="Canada">
