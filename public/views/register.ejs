@@ -42,7 +42,19 @@ Assignment: HTML, CSS, JavaScript
                 <label for="floatingCity">City</label>
             </div>
             <div class="form-floating col-md-4">
-                <input type="text" name="province" class="form-control" id="floatingProvince" placeholder="Alberta">
+                <!-- Creating a dropdown list for options -->
+                <select list="province" name="province" class="form-control" id="floatingProvince" placeholder="Alberta">
+                <datalist id="province">
+                    <option value="Alberta">Alberta</option>
+                    <option value="Saskatchewan">Saskatchewan</option>
+                    <option value="British Columbia">British Columbia</option>
+                    <option value="Ontario">Ontario</option>
+                    <option value="Quebec">Quebec</option>
+                    <option value="Nova Scotia">Nova Scotia</option>
+                    <option value="Manitoba">Manitoba</option>
+                    <option value="New Brunswick">New Brunswick</option>
+                    <option value="Prince Edward Island">Prince Edward Island</option>
+                </datalist>
                 <label for="floatingProvince">Province</label>
             </div>
             <div class="form-floating col-md-4">
