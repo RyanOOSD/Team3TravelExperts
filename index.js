@@ -4,6 +4,8 @@ const path = require("path");
 const port = 3000;
 const appDir = path.dirname(require.main.filename);
 const { body, validationResult } = require("express-validator");
+//for encryption
+const bcrypt = require("bcrypt");
 
 /// Set the view engine to EJS
 app.set("view engine", "ejs");
@@ -307,6 +309,9 @@ app.post(
       postalCode,
       country,
       agentId,
+      username,
+      password,
+      confirmpassword,
     } = req.body;
     console.log(req.body);
     const registerCustomer = `
@@ -327,6 +332,19 @@ app.post(
       email,
       agentId,
     ];
+    var saltRounds = 10; //how complex u wanna keep your encryption
+    var hashGen;
+    bcrypt.hash(password, saltRounds, function (err, hash) {
+      // Store hash in your password DB.
+      if (err) {
+        return err;
+      }
+      hashGen = hash;
+      console.log(hash);
+    });
+    // bcrypt.compare(password, hashGen).then(function (result) {
+    //   console.log("bcrypt result: ", result);
+    // });
     await db.promise().query(registerCustomer, customerInput);
     console.log(agentId);
     res.render("thankregister");
