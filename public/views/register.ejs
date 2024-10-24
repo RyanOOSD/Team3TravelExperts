@@ -13,31 +13,35 @@ Assignment: HTML, CSS, JavaScript
   <form
     action="/submit-registration"
     method="POST"
-    class="row g-0 mt-5 needs-validation"
+    class="row g-3 p-4 mt-5 needs-validation"
   >
-    <h1 class="h1 mt-5 mb-3 text-center">Account Registration</h1>
+    <h1 class="h1 mt-3 mb-4 text-center">Account Registration</h1>
+
     <h4 class="h4 mb-3">Personal Information</h4>
-    <div class="form-floating col-md-6">
-      <input
-        type="text"
-        name="firstName"
-        class="form-control"
-        id="floatingFirst"
-        required
-      />
-      <label for="floatingFirst">First Name</label>
+    <div class="row g-3">
+      <div class="form-floating col-md-6">
+        <input
+          type="text"
+          name="firstName"
+          class="form-control"
+          id="floatingFirst"
+          required
+        />
+        <label for="floatingFirst">First Name</label>
+      </div>
+      <div class="form-floating col-md-6">
+        <input
+          type="text"
+          name="lastName"
+          class="form-control"
+          id="floatingLast"
+          required
+        />
+        <label for="floatingLast">Last Name</label>
+      </div>
     </div>
-    <div class="form-floating col-md-6">
-      <input
-        type="text"
-        name="lastName"
-        class="form-control"
-        id="floatingLast"
-        required
-      />
-      <label for="floatingLast">Last Name</label>
-    </div>
-    <div class="form-floating">
+
+    <div class="form-floating mb-4">
       <input
         type="email"
         name="email"
@@ -47,31 +51,35 @@ Assignment: HTML, CSS, JavaScript
       />
       <label for="floatingEmail">Email address</label>
     </div>
-    <div class="form-floating">
-      <input
-        type="text"
-        name="homePhone"
-        class="form-control"
-        id="floatingHPhone"
-        maxlength="10"
-        minlength="10"
-        required
-      />
-      <label for="floatingHPhone">Home Phone</label>
+
+    <div class="row g-3">
+      <div class="form-floating col-md-6">
+        <input
+          type="text"
+          name="homePhone"
+          class="form-control"
+          id="floatingHPhone"
+          maxlength="10"
+          minlength="10"
+          required
+        />
+        <label for="floatingHPhone">Home Phone</label>
+      </div>
+      <div class="form-floating col-md-6">
+        <input
+          type="text"
+          name="busPhone"
+          class="form-control"
+          id="floatingBPhone"
+          minlength="10"
+          maxlength="10"
+          required
+        />
+        <label for="floatingBPhone">Business Phone</label>
+      </div>
     </div>
-    <div class="form-floating">
-      <input
-        type="text"
-        name="busPhone"
-        class="form-control"
-        id="floatingBPhone"
-        minlength="10"
-        maxlength="10"
-        required
-      />
-      <label for="floatingBPhone">Business Phone</label>
-    </div>
-    <div class="form-floating">
+
+    <div class="form-floating mb-4">
       <input
         type="text"
         name="address"
@@ -81,41 +89,45 @@ Assignment: HTML, CSS, JavaScript
       />
       <label for="floatingAddress">Address</label>
     </div>
-    <div class="form-floating col-md-4">
-      <input
-        type="text"
-        name="city"
-        class="form-control"
-        id="floatingCity"
-        required
-      />
-      <label for="floatingCity">City</label>
+
+    <div class="row g-3">
+      <div class="form-floating col-md-4">
+        <input
+          type="text"
+          name="city"
+          class="form-control"
+          id="floatingCity"
+          required
+        />
+        <label for="floatingCity">City</label>
+      </div>
+      <div class="form-floating col-md-4">
+        <input
+          type="text"
+          name="province"
+          class="form-control upperText"
+          id="floatingProvince"
+          minlength="2"
+          maxlength="2"
+          required
+        />
+        <label for="floatingProvince">Province</label>
+      </div>
+      <div class="form-floating col-md-4">
+        <input
+          type="text"
+          name="postalCode"
+          class="form-control upperText"
+          id="floatingPostal"
+          required
+          minlength="6"
+          maxlength="6"
+        />
+        <label for="floatingPostal">Postal Code</label>
+      </div>
     </div>
-    <div class="form-floating col-md-4">
-      <input
-        type="text"
-        name="province"
-        class="form-control upperText"
-        id="floatingProvince"
-        minlength="2"
-        maxlength="2"
-        required
-      />
-      <label for="floatingProvince">Province</label>
-    </div>
-    <div class="form-floating col-md-4">
-      <input
-        type="text"
-        name="postalCode"
-        class="form-control upperText"
-        id="floatingPostal"
-        required
-        minlength="6"
-        maxlength="6"
-      />
-      <label for="floatingPostal">Postal Code</label>
-    </div>
-    <div class="form-floating">
+
+    <div class="form-floating mb-4">
       <input
         type="text"
         name="country"
@@ -125,7 +137,8 @@ Assignment: HTML, CSS, JavaScript
       />
       <label for="floatingCountry">Country</label>
     </div>
-    <div class="form-floating">
+
+    <div class="form-floating mb-4">
       <select class="form-control" id="floatingAgentId" name="agentId" required>
         <option value="" disabled selected hidden>Pick an agent...</option>
         <% agents.forEach(agent => { %>
@@ -137,40 +150,42 @@ Assignment: HTML, CSS, JavaScript
       </select>
       <label for="floatingAgentId">Agent ID</label>
     </div>
-    <h4 class="h4 my-3">Account Details</h4>
 
-    <div class="form-floating col-md-4">
-      <input
-        type="text"
-        name="username"
-        class="form-control"
-        id="floatingUser"
-        required
-      />
-      <label for="floatingUser">Username</label>
-    </div>
-    <div class="form-floating col-md-4">
-      <input
-        type="password"
-        name="password"
-        class="form-control"
-        id="floatingPassword"
-        required
-      />
-      <label for="floatingPassword">Password</label>
-    </div>
-    <div class="form-floating col-md-4">
-      <input
-        type="password"
-        name="confirmpassword"
-        class="form-control"
-        id="floatingConfirmPassword"
-        required
-      />
-      <label for="floatingPassword">Confirm Password</label>
+    <h4 class="h4 my-4">Account Details</h4>
+    <div class="row g-3">
+      <div class="form-floating col-md-4">
+        <input
+          type="text"
+          name="username"
+          class="form-control"
+          id="floatingUser"
+          required
+        />
+        <label for="floatingUser">Username</label>
+      </div>
+      <div class="form-floating col-md-4">
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          id="floatingPassword"
+          required
+        />
+        <label for="floatingPassword">Password</label>
+      </div>
+      <div class="form-floating col-md-4">
+        <input
+          type="password"
+          name="confirmpassword"
+          class="form-control"
+          id="floatingConfirmPassword"
+          required
+        />
+        <label for="floatingConfirmPassword">Confirm Password</label>
+      </div>
     </div>
 
-    <div class="row justify-content-center gap-2 py-3">
+    <div class="row justify-content-center gap-2 py-4">
       <button type="submit" class="btn btn-primary py-2 col-md-3">
         Register
       </button>
