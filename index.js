@@ -174,7 +174,6 @@ app.post(
       const customerId = generateNo();
       const bookingId = generateNo();
       const bookingNo = generateNo();
-      // const tripType = "L"; // Fixed value for leisure trip
 
       // Insert customer into `customers` table
       const customerQuery = `
@@ -283,7 +282,7 @@ app.post(
     ],
   ],
 
-  async (req, res) => {
+  (req, res) => {
     const error = validationResult(req);
     const pullErr = validationResult.withDefaults({
       formatter: (error) => error.msg,
@@ -314,40 +313,56 @@ app.post(
       confirmpassword,
     } = req.body;
     console.log(req.body);
-    const registerCustomer = `
-      INSERT INTO customers (CustomerId,CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, AgentId)
-      VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-    const customerInput = [
-      customerId,
-      firstName,
-      lastName,
-      address,
-      city,
-      province,
-      postalCode,
-      country,
-      homePhone,
-      busPhone,
-      email,
-      agentId,
-    ];
-    var saltRounds = 10; //how complex u wanna keep your encryption
-    var hashGen;
-    bcrypt.hash(password, saltRounds, function (err, hash) {
-      // Store hash in your password DB.
-      if (err) {
-        return err;
+    //first register user creds in new user table
+    //check if username(pk) already exists
+    const userexists = "select * from users where username = ?";
+    db.query(userexists, [username], (err, results) => {
+      if (err) throw err;
+      console.log("userexists: ", results.length == 0);
+      if (results.length > 0) {
+        return res.render("badform", {
+          pageTitle: "username already exists",
+          badSubmit: [username + " already exists"],
+        });
       }
-      hashGen = hash;
-      console.log(hash);
+      const insertUser =
+        "INSERT INTO users (uid, username,password) VALUES (?,?,?);";
+      var saltRounds = 10; //how complex u wanna keep your encryption
+
+      bcrypt.hash(password, saltRounds, function (err, hash) {
+        // Store hash in your password DB.
+        if (err) {
+          return err;
+        }
+        var userVals = [customerId, username, hash];
+
+        db.query(insertUser, userVals);
+      });
+      // bcrypt.compare(password, hashGen).then(function (result) {
+      //   console.log("bcrypt result: ", result);
+      // });
+      const registerCustomer = `
+        INSERT INTO customers (CustomerId,CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, AgentId)
+        VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+      const customerInput = [
+        customerId,
+        firstName,
+        lastName,
+        address,
+        city,
+        province,
+        postalCode,
+        country,
+        homePhone,
+        busPhone,
+        email,
+        agentId,
+      ];
+      db.promise().query(registerCustomer, customerInput);
+      console.log(agentId);
+      res.render("thankregister");
     });
-    // bcrypt.compare(password, hashGen).then(function (result) {
-    //   console.log("bcrypt result: ", result);
-    // });
-    await db.promise().query(registerCustomer, customerInput);
-    console.log(agentId);
-    res.render("thankregister");
   }
 );
 
