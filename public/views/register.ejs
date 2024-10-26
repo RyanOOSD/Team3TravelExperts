@@ -13,11 +13,10 @@ Assignment: HTML, CSS, JavaScript
   <form
     action="/submit-registration"
     method="POST"
-    class="row g-3 p-4 mt-5 needs-validation"
+    class="row g-3 needs-validation"
   >
     <h1 class="h1 mt-3 mb-4 text-center">Account Registration</h1>
-
-    <h4 class="h4 mb-3">Personal Information</h4>
+    <h4 class="h4">Personal Information</h4>
     <div class="row g-3">
       <div class="form-floating col-md-6">
         <input
@@ -25,6 +24,7 @@ Assignment: HTML, CSS, JavaScript
           name="firstName"
           class="form-control"
           id="floatingFirst"
+          placeholder="F"
           required
         />
         <label for="floatingFirst">First Name</label>
@@ -35,23 +35,27 @@ Assignment: HTML, CSS, JavaScript
           name="lastName"
           class="form-control"
           id="floatingLast"
+          placeholder="L"
           required
         />
         <label for="floatingLast">Last Name</label>
       </div>
     </div>
-
-    <div class="form-floating mb-4">
-      <input
-        type="email"
-        name="email"
-        class="form-control"
-        id="floatingEmail"
-        required
-      />
-      <label for="floatingEmail">Email address</label>
+    <div class="row g-3">
+        <div class="form-floating col-md-12">
+        <input
+            type="email"
+            name="email"
+            class="form-control"
+            id="floatingEmail"
+            placeholder="email@exmaple.com"
+            required
+        />
+        <label for="floatingEmail">Email address</label>
+        </div>
     </div>
 
+    <div class="row g-5"></div>
     <div class="row g-3">
       <div class="form-floating col-md-6">
         <input
@@ -61,6 +65,7 @@ Assignment: HTML, CSS, JavaScript
           id="floatingHPhone"
           maxlength="10"
           minlength="10"
+          placeholder="4031112222"
           required
         />
         <label for="floatingHPhone">Home Phone</label>
@@ -73,85 +78,101 @@ Assignment: HTML, CSS, JavaScript
           id="floatingBPhone"
           minlength="10"
           maxlength="10"
+          placeholder="4031112222"
           required
         />
         <label for="floatingBPhone">Business Phone</label>
       </div>
     </div>
 
-    <div class="form-floating mb-4">
-      <input
-        type="text"
-        name="address"
-        class="form-control"
-        id="floatingAddress"
-        required
-      />
-      <label for="floatingAddress">Address</label>
-    </div>
-
+    <div class="row g-5"></div>
     <div class="row g-3">
-      <div class="form-floating col-md-4">
+        <div class="form-floating col-md-12">
+            <input
+                type="text"
+                name="address"
+                class="form-control"
+                id="floatingAddress"
+                placeholder="Street"
+                required
+            />
+            <label for="floatingAddress">Address</label>
+        </div>
+    </div>
+    <div class="row g-3">
+      <div class="form-floating col-md-3">
         <input
           type="text"
           name="city"
           class="form-control"
           id="floatingCity"
+          placeholder="Calgary"
           required
         />
         <label for="floatingCity">City</label>
-      </div>
-      <div class="form-floating col-md-4">
-        <input
-          type="text"
-          name="province"
-          class="form-control upperText"
-          id="floatingProvince"
-          minlength="2"
-          maxlength="2"
-          required
-        />
-        <label for="floatingProvince">Province</label>
-      </div>
-      <div class="form-floating col-md-4">
+        </div>
+        <div class="form-floating col-md-3">
+            <select name="province" class="form-select" id="floatingProvince">
+                 <option value="" disabled selected hidden>Pick a province...</option>
+                <option value="AB">AB</option>
+                <option value="BC">BC</option>
+                <option value="MB">MB</option>
+                <option value="NB">NB</option>
+                <option value="NL">NL</option>
+                <option value="NT">NT</option>
+                <option value="NS">NS</option>
+                <option value="NU">NU</option>
+                <option value="ON">ON</option>
+                <option value="PE">PE</option>
+                <option value="QC">QC</option>
+                <option value="SK">SK</option>
+                <option value="YT">YT</option>
+            </select>
+            <label for="floating-province">Province / Territory</label>
+        </div>
+      <div class="form-floating col-md-3">
         <input
           type="text"
           name="postalCode"
           class="form-control upperText"
           id="floatingPostal"
-          required
           minlength="6"
           maxlength="6"
+          placeholder="Canada"
+          required
         />
         <label for="floatingPostal">Postal Code</label>
       </div>
+      <div class="form-floating col-md-3">
+        <input
+          type="text"
+          name="country"
+          class="form-control upperText"
+          id="floatingCountry"
+          placeholder="Canada"
+          required
+        />
+        <label for="floatingCountry">Country</label>
+      </div>
     </div>
 
-    <div class="form-floating mb-4">
-      <input
-        type="text"
-        name="country"
-        class="form-control upperText"
-        id="floatingCountry"
-        required
-      />
-      <label for="floatingCountry">Country</label>
+    <div class="row g-5"></div>
+    <div class="row g-3">
+        <div class="form-floating mb-4">
+        <select class="form-control" id="floatingAgentId" name="agentId" required>
+            <option value="" disabled selected hidden>Pick an agent...</option>
+            <% agents.forEach(agent => { %>
+            <option value="<%= agent.AgentId %>">
+            <%= agent.AgentId + " - " + agent.AgtFirstName + " " +
+            agent.AgtLastName %>
+            </option>
+            <% }) %>
+        </select>
+        <label for="floatingAgentId">Agent ID</label>
+        </div>
     </div>
 
-    <div class="form-floating mb-4">
-      <select class="form-control" id="floatingAgentId" name="agentId" required>
-        <option value="" disabled selected hidden>Pick an agent...</option>
-        <% agents.forEach(agent => { %>
-        <option value="<%= agent.AgentId %>">
-          <%= agent.AgentId + " - " + agent.AgtFirstName + " " +
-          agent.AgtLastName %>
-        </option>
-        <% }) %>
-      </select>
-      <label for="floatingAgentId">Agent ID</label>
-    </div>
-
-    <h4 class="h4 my-4">Account Details</h4>
+    <h4 class="h4">Account Details</h4>
     <div class="row g-3">
       <div class="form-floating col-md-4">
         <input
@@ -159,6 +180,7 @@ Assignment: HTML, CSS, JavaScript
           name="username"
           class="form-control"
           id="floatingUser"
+          placeholder="Username"
           required
         />
         <label for="floatingUser">Username</label>
@@ -169,6 +191,7 @@ Assignment: HTML, CSS, JavaScript
           name="password"
           class="form-control"
           id="floatingPassword"
+          placeholder="Password"
           required
         />
         <label for="floatingPassword">Password</label>
@@ -179,13 +202,14 @@ Assignment: HTML, CSS, JavaScript
           name="confirmpassword"
           class="form-control"
           id="floatingConfirmPassword"
+          placeholder="Password"
           required
         />
         <label for="floatingConfirmPassword">Confirm Password</label>
       </div>
     </div>
 
-    <div class="row justify-content-center gap-2 py-4">
+    <div class="row justify-content-center gap-2 py-4 mt-5">
       <button type="submit" class="btn btn-primary py-2 col-md-3">
         Register
       </button>
