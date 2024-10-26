@@ -1,10 +1,3 @@
-function inputDisplay()
-{
-    document.getElementById('HPhone').innerText = 'Enter your Home Phone number as (### ###-####)'
-    document.getElementById('BPhone').innerText = 'Enter your Business Phone number as (### ###-####)'
-    document.getElementById('Postal').innerText = 'Your Postal Code should be similar to T2C 5P6'
-}
-
 /*
 Author: Ryan Angaangan
 Student ID: 000783037

@@ -85,6 +85,7 @@ app.get("/contact", (req, res) => {
   });
 });
 
+// Retrieves agents from db before displaying page
 app.get("/booking", (req, res) => {
   const packageId = req.query.id;
   console.log(packageId);
@@ -103,6 +104,10 @@ app.get("/booking", (req, res) => {
   });
 });
 
+/*
+Verifies user input from form usiing express-validator before inserting
+the data into the database
+*/
 app.post(
   "/submit-booking",
   [
@@ -147,6 +152,7 @@ app.post(
     });
     const printErr = pullErr(req).array();
 
+    // If validation fails, do not submit form and load error page
     if (!error.isEmpty()) {
       return res.render("badform", {
         pageTitle: "Invalid form!",
@@ -238,7 +244,10 @@ app.get("/register", async (req, res) => {
   });
 });
 
-// Endpoint to handle registration submissions
+/* 
+Endpoint to handle registration submissions
+Validate form input with express validator before submitting into database
+*/
 app.post(
   "/submit-registration",
   [
@@ -290,6 +299,7 @@ app.post(
     });
     const printErr = pullErr(req).array();
 
+    // Load error page if validation fails
     if (!error.isEmpty()) {
       return res.render("badform", {
         pageTitle: "Invalid form!",
