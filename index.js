@@ -4,6 +4,8 @@ const path = require("path");
 const port = 3000;
 const appDir = path.dirname(require.main.filename);
 const { body, validationResult } = require("express-validator");
+//for encryption
+const bcrypt = require("bcrypt");
 
 /// Set the view engine to EJS
 app.set("view engine", "ejs");
@@ -71,6 +73,7 @@ app.get("/contact", (req, res) => {
     db.query(agentQuery, (err, agentOut) => {
       if (err) throw err;
       db.query(agentTwoQuery, (err, agentTwoOut) => {
+        if (err) throw err;
         res.render("contact", {
           pageTitle: "Contact Us | Travel Experts",
           agencies: agencyOut,
@@ -82,6 +85,7 @@ app.get("/contact", (req, res) => {
   });
 });
 
+// Retrieves agents from db before displaying page
 app.get("/booking", (req, res) => {
   const packageId = req.query.id;
   console.log(packageId);
@@ -100,6 +104,10 @@ app.get("/booking", (req, res) => {
   });
 });
 
+/*
+Verifies user input from form usiing express-validator before inserting
+the data into the database
+*/
 app.post(
   "/submit-booking",
   [
@@ -144,6 +152,7 @@ app.post(
     });
     const printErr = pullErr(req).array();
 
+    // If validation fails, do not submit form and load error page
     if (!error.isEmpty()) {
       return res.render("badform", {
         pageTitle: "Invalid form!",
@@ -172,7 +181,6 @@ app.post(
       const customerId = generateNo();
       const bookingId = generateNo();
       const bookingNo = generateNo();
-      // const tripType = "L"; // Fixed value for leisure trip
 
       // Insert customer into `customers` table
       const customerQuery = `
@@ -236,7 +244,10 @@ app.get("/register", async (req, res) => {
   });
 });
 
-// Endpoint to handle registration submissions
+/* 
+Endpoint to handle registration submissions
+Validate form input with express validator before submitting into database
+*/
 app.post(
   "/submit-registration",
   [
@@ -281,13 +292,14 @@ app.post(
     ],
   ],
 
-  async (req, res) => {
+  (req, res) => {
     const error = validationResult(req);
     const pullErr = validationResult.withDefaults({
       formatter: (error) => error.msg,
     });
     const printErr = pullErr(req).array();
 
+    // Load error page if validation fails
     if (!error.isEmpty()) {
       return res.render("badform", {
         pageTitle: "Invalid form!",
@@ -307,29 +319,61 @@ app.post(
       postalCode,
       country,
       agentId,
+      username,
+      password,
+      confirmpassword,
     } = req.body;
     console.log(req.body);
-    const registerCustomer = `
-      INSERT INTO customers (CustomerId,CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, AgentId)
-      VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-    const customerInput = [
-      customerId,
-      firstName,
-      lastName,
-      address,
-      city,
-      province,
-      postalCode,
-      country,
-      homePhone,
-      busPhone,
-      email,
-      agentId,
-    ];
-    await db.promise().query(registerCustomer, customerInput);
-    console.log(agentId);
-    res.render("thankregister");
+    //first register user creds in new user table
+    //check if username(pk) already exists
+    const userexists = "select * from users where username = ?";
+    db.query(userexists, [username], (err, results) => {
+      if (err) throw err;
+      console.log("userexists: ", results.length == 0);
+      if (results.length > 0) {
+        return res.render("badform", {
+          pageTitle: "username already exists",
+          badSubmit: [username + " already exists"],
+        });
+      }
+      const insertUser =
+        "INSERT INTO users (uid, username,password) VALUES (?,?,?);";
+      var saltRounds = 10; //how complex u wanna keep your encryption
+
+      bcrypt.hash(password, saltRounds, function (err, hash) {
+        // Store hash in your password DB.
+        if (err) {
+          return err;
+        }
+        var userVals = [customerId, username, hash];
+
+        db.query(insertUser, userVals);
+      });
+      // bcrypt.compare(password, hashGen).then(function (result) {
+      //   console.log("bcrypt result: ", result);
+      // });
+      const registerCustomer = `
+        INSERT INTO customers (CustomerId,CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, AgentId)
+        VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+      const customerInput = [
+        customerId,
+        firstName,
+        lastName,
+        address,
+        city,
+        province,
+        postalCode,
+        country,
+        homePhone,
+        busPhone,
+        email,
+        agentId,
+      ];
+      db.promise().query(registerCustomer, customerInput);
+      console.log(agentId);
+      res.render("thankregister");
+    });
   }
 );
 

@@ -1,9 +1,9 @@
 /* 
 Author: Ryan Angaangan
 Student ID: 000783037
-Date: October 1, 2024
+Date: October 25, 2024
 Course: CPRG 210 - Web Application Development
-Assignment: HTML, CSS, JavaScript
+Assignment: Threaded Project
 */
 
 /* Changes amount of top padding dependiing on the size of the viewport  */
@@ -28,45 +28,11 @@ Assignment: HTML, CSS, JavaScript
   text-shadow: 2px 2px 10px black;
 }
 
-/* By default, hide form descriptions when page is loaded */
-#first-description {
-  display: none;
-}
-#last-description {
-  display: none;
-}
-#email-description {
-  display: none;
-}
-#phone-description {
-  display: none;
-}
-#password-description {
-  display: none;
-}
-#address-description {
-  display: none;
-}
-#city-description {
-  display: none;
-}
-#postal-description {
-  display: none;
-}
-
+/* Add a background for packages */
 .package-style {
   background: linear-gradient(to bottom right, #4a00e0, #8e2de2);
   border-radius: 15px;
 }
-
-/* .booking-form {
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 30px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-} */
 
 .upperText {
   text-transform: uppercase;
