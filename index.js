@@ -73,6 +73,7 @@ app.get("/contact", (req, res) => {
     db.query(agentQuery, (err, agentOut) => {
       if (err) throw err;
       db.query(agentTwoQuery, (err, agentTwoOut) => {
+        if (err) throw err;
         res.render("contact", {
           pageTitle: "Contact Us | Travel Experts",
           agencies: agencyOut,

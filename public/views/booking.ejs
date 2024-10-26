@@ -4,7 +4,7 @@
   <div class="booking-form">
     <h2 class="text-center my-4">Travel Booking Form</h2>
 
-    <form action="/submit-booking" method="POST" class="needs-validation">
+    <form action="/submit-booking" method="POST" class="needs-validation" onsubmit="bookValidation()">
       <input
         type="hidden"
         name="packageId"
@@ -70,11 +70,12 @@
             id="travelerCountId"
             value="1"
             min="1"
+            max="9"
           />
         </div>
         <div class="col-md-6">
-          <label for="tripType" class="form-label"> Trip Type</label>
-          <select name="tripType" class="form-control" id="tripType" required>
+          <label for="tripTypeId" class="form-label"> Trip Type</label>
+          <select name="tripType" class="form-control" id="tripTypeId" required>
             <!-- dummy option for validation -->
             <option value="" disabled selected hidden>Pick a trip type...</option>
             <option value="L">Leisure</option>
@@ -93,6 +94,7 @@
             type="text"
             class="form-control"
             id="firstNameId"
+            maxlength="25"
             name="firstName"
             required
           />
@@ -103,6 +105,7 @@
             type="text"
             class="form-control"
             id="lastNameId"
+            maxlength="25"
             name="lastName"
             required
           />
@@ -115,6 +118,7 @@
           type="text"
           class="form-control"
           id="addressId"
+          maxlength="75"
           name="address"
           required
         />
@@ -127,6 +131,7 @@
             type="text"
             class="form-control"
             id="cityId"
+            maxlength="50"
             name="city"
             required
           />
@@ -156,10 +161,10 @@
             type="text"
             class="form-control upperText"
             id="postalCodeId"
-            name="postalCode"
-            required
             minlength="6"
             maxlength="6"
+            name="postalCode"
+            required
           />
         </div>
         <div class="col-md-3">
@@ -168,6 +173,7 @@
             type="text"
             class="form-control upperText"
             id="countryId"
+            maxlength="25"
             name="country"
             required
           />
@@ -208,6 +214,7 @@
             type="email"
             class="form-control"
             id="emailId"
+            maxlength="50"
             name="email"
             required
           />

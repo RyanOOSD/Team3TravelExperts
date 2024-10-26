@@ -15,16 +15,13 @@ Assignment: HTML, CSS, JavaScript
 -->
 <%- include("includes/header.ejs") %>
 
-onfocus="document.getElementById('HPhone').innerText = 'Enter your Home Phone number as (### ###-####)'" onblur="document.getElementById('HPhone').innerText = 'Home Phone'"> 
-onfocus="document.getElementById('BPhone').innerText = 'Enter your Business Phone number as (### ###-####)'" onblur="document.getElementById('BPhone').innerText = 'Business Phone'"> 
-onfocus="document.getElementById('Postal').innerText = 'Your Postal Code should be similar to T2C 5P6'" onblur="document.getElementById('Postal').innerText = 'Postal Code'">
-
 <!-- Bootstrap Form -->
 <main class="container form-register w-100 mt-5">
   <form
     action="/submit-registration"
     method="POST"
     class="row g-3 needs-validation"
+    onsubmit="regValidation()"
   >
     <h1 class="h1 mt-3 mb-4 text-center">Account Registration</h1>
     <h4 class="h4">Personal Information</h4>
@@ -35,6 +32,7 @@ onfocus="document.getElementById('Postal').innerText = 'Your Postal Code should 
           name="firstName"
           class="form-control"
           id="floatingFirst"
+          maxlength="25"
           placeholder="F"
           required
         />
@@ -46,6 +44,7 @@ onfocus="document.getElementById('Postal').innerText = 'Your Postal Code should 
           name="lastName"
           class="form-control"
           id="floatingLast"
+          maxlength="25"
           placeholder="L"
           required
         />
@@ -59,6 +58,7 @@ onfocus="document.getElementById('Postal').innerText = 'Your Postal Code should 
             name="email"
             class="form-control"
             id="floatingEmail"
+            maxlength="50"
             placeholder="email@exmaple.com"
             required
         />
@@ -104,6 +104,7 @@ onfocus="document.getElementById('Postal').innerText = 'Your Postal Code should 
                 name="address"
                 class="form-control"
                 id="floatingAddress"
+                maxlength="75"
                 placeholder="Street"
                 required
             />
@@ -117,6 +118,7 @@ onfocus="document.getElementById('Postal').innerText = 'Your Postal Code should 
           name="city"
           class="form-control"
           id="floatingCity"
+          maxlength="50"
           placeholder="Calgary"
           required
         />
@@ -149,7 +151,7 @@ onfocus="document.getElementById('Postal').innerText = 'Your Postal Code should 
           id="floatingPostal"
           minlength="6"
           maxlength="6"
-          placeholder="Canada"
+          placeholder="T0A0A0"
           required
         />
         <label for="floatingPostal">Postal Code</label>
@@ -160,6 +162,7 @@ onfocus="document.getElementById('Postal').innerText = 'Your Postal Code should 
           name="country"
           class="form-control upperText"
           id="floatingCountry"
+          maxlength="25"
           placeholder="Canada"
           required
         />
@@ -202,6 +205,8 @@ onfocus="document.getElementById('Postal').innerText = 'Your Postal Code should 
           name="password"
           class="form-control"
           id="floatingPassword"
+          minlength="3"
+          maxlength="25"
           placeholder="Password"
           required
         />
@@ -213,6 +218,8 @@ onfocus="document.getElementById('Postal').innerText = 'Your Postal Code should 
           name="confirmpassword"
           class="form-control"
           id="floatingConfirmPassword"
+          minlength="8"
+          maxlength="32"
           placeholder="Password"
           required
         />
