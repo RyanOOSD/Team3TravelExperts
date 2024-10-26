@@ -15,88 +15,220 @@ Assignment: HTML, CSS, JavaScript
 -->
 <%- include("includes/header.ejs") %>
 
-    <!-- Bootstrap Form -->
-    <main class="container form-register w-100 mt-5">
-        <form action="/submit-registration" method="POST" onsubmit="return regValidation()" class="row g-0 mt-5 needs-validation">
-            <h1 class="h1 mt-5 mb-3 text-center">Account Registration</h1>
-            <h4 class="h4 mb-3">Personal Information</h4>
-            <div class="form-floating col-md-6">
-                <input type="text" name="firstName" class="form-control" id="floatingFirst" placeholder="John">
-                <label for="floatingFirst">First Name</label>
-            </div>
-            <div class="form-floating col-md-6">
-                <input type="text" name="lastName" class="form-control" id="floatingLast" placeholder="Doe">
-                <label for="floatingLast">Last Name</label>
-            </div>
-            <div class="form-floating">
-                <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="name@example.com"> 
-                <label for="floatingEmail">Email address</label>
-            </div>
-            <div class="form-floating">
-                <input type="text" name="homePhone" class="form-control" id="floatingHPhone" placeholder="(555) 555-5555" onfocus="document.getElementById('HPhone').innerText = 'Enter your Home Phone number as (### ###-####)'" onblur="document.getElementById('HPhone').innerText = 'Home Phone'"> 
-                <label for="floatingHPhone" id="HPhone">Home Phone</label>
-            </div>
-            <div class="form-floating">
-                <input type="text" name="busPhone" class="form-control" id="floatingBPhone" placeholder="(555) 555-5555" onfocus="document.getElementById('BPhone').innerText = 'Enter your Business Phone number as (### ###-####)'" onblur="document.getElementById('BPhone').innerText = 'Business Phone'"> 
-                <label for="floatingBPhone" id="BPhone">Business Phone</label>
-            </div>
-            <div class="form-floating">
-                <input type="text" name="address" class="form-control" id="floatingAddress" placeholder="Address">
-                <label for="floatingAddress">Address</label>
-            </div>
-            <div class="form-floating col-md-4">
-                <input type="text" name="city" class="form-control" id="floatingCity" placeholder="City">
-                <label for="floatingCity">City</label>
-            </div>
-            <div class="form-floating col-md-4">
-                <!-- Creating a dropdown list for options -->
-                <select list="province" name="province" class="form-control" id="floatingProvince">
-                <datalist id="province" name="province">
-                    <option value="Blank">Please Choose a Province...</option>
-                    <option value="Alberta">Alberta</option>
-                    <option value="Saskatchewan">Saskatchewan</option>
-                    <option value="British Columbia">British Columbia</option>
-                    <option value="Ontario">Ontario</option>
-                    <option value="Quebec">Quebec</option>
-                    <option value="Nova Scotia">Nova Scotia</option>
-                    <option value="Manitoba">Manitoba</option>
-                    <option value="New Brunswick">New Brunswick</option>
-                    <option value="Prince Edward Island">Prince Edward Island</option>
-                </datalist>
-                </select>
-                <label for="floatingProvince">Province</label>
-            </div>
-            <div class="form-floating col-md-4">
-                <input type="text" name="postalCode" class="form-control" id="floatingPostal" placeholder="T2C 5P6" onfocus="document.getElementById('Postal').innerText = 'Your Postal Code should be similar to T2C 5P6'" onblur="document.getElementById('Postal').innerText = 'Postal Code'">
-                <label for="floatingPostal" id="Postal">Postal Code</label>
-            </div>
-            <div class="form-floating">
-                <input type="text" name="country" class="form-control" id="floatingCountry" placeholder="Canada">
-                <label for="floatingCountry">Country</label>
-            </div>
-            <div class="form-floating">
-                <select class="form-control" id="floatingAgentId" name="agentId">
-                <option value="" disabled selected hidden>Pick an agent...</option>
-                <% agents.forEach(agent => { %>
-                    <option value="<%= agent.AgentId %>"><%= agent.AgentId + " - " + agent.AgtFirstName + " " + agent.AgtLastName %></option>
-                <% }) %>
-                </select>
-                <label for="floatingAgentId">Agent ID</label>
-            </div>
-            <h4 class="h4 my-3">Account Details</h4>
-            <div class="form-floating col-md-6">
-                <input type="text" name="username" class="form-control" id="floatingUser" placeholder="John">
-                <label for="floatingUser">Username</label>
-            </div>
-            <div class="form-floating col-md-6">
-                <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
-            </div>
-            <div class="row justify-content-center gap-2 py-3">
-                <button type="submit" class="btn btn-primary py-2 col-md-3">Register</button>
-                <button type="reset" class="btn btn-secondary py-2 col-md-3">Reset</button>
-            </div>
-        </form>
-    </main>
+onfocus="document.getElementById('HPhone').innerText = 'Enter your Home Phone number as (### ###-####)'" onblur="document.getElementById('HPhone').innerText = 'Home Phone'"> 
+onfocus="document.getElementById('BPhone').innerText = 'Enter your Business Phone number as (### ###-####)'" onblur="document.getElementById('BPhone').innerText = 'Business Phone'"> 
+onfocus="document.getElementById('Postal').innerText = 'Your Postal Code should be similar to T2C 5P6'" onblur="document.getElementById('Postal').innerText = 'Postal Code'">
+
+<!-- Bootstrap Form -->
+<main class="container form-register w-100 mt-5">
+  <form
+    action="/submit-registration"
+    method="POST"
+    class="row g-3 needs-validation"
+  >
+    <h1 class="h1 mt-3 mb-4 text-center">Account Registration</h1>
+    <h4 class="h4">Personal Information</h4>
+    <div class="row g-3">
+      <div class="form-floating col-md-6">
+        <input
+          type="text"
+          name="firstName"
+          class="form-control"
+          id="floatingFirst"
+          placeholder="F"
+          required
+        />
+        <label for="floatingFirst">First Name</label>
+      </div>
+      <div class="form-floating col-md-6">
+        <input
+          type="text"
+          name="lastName"
+          class="form-control"
+          id="floatingLast"
+          placeholder="L"
+          required
+        />
+        <label for="floatingLast">Last Name</label>
+      </div>
+    </div>
+    <div class="row g-3">
+        <div class="form-floating col-md-12">
+        <input
+            type="email"
+            name="email"
+            class="form-control"
+            id="floatingEmail"
+            placeholder="email@exmaple.com"
+            required
+        />
+        <label for="floatingEmail">Email address</label>
+        </div>
+    </div>
+
+    <div class="row g-5"></div>
+    <div class="row g-3">
+      <div class="form-floating col-md-6">
+        <input
+          type="text"
+          name="homePhone"
+          class="form-control"
+          id="floatingHPhone"
+          maxlength="10"
+          minlength="10"
+          placeholder="4031112222"
+          required
+        />
+        <label for="floatingHPhone">Home Phone</label>
+      </div>
+      <div class="form-floating col-md-6">
+        <input
+          type="text"
+          name="busPhone"
+          class="form-control"
+          id="floatingBPhone"
+          minlength="10"
+          maxlength="10"
+          placeholder="4031112222"
+          required
+        />
+        <label for="floatingBPhone">Business Phone</label>
+      </div>
+    </div>
+
+    <div class="row g-5"></div>
+    <div class="row g-3">
+        <div class="form-floating col-md-12">
+            <input
+                type="text"
+                name="address"
+                class="form-control"
+                id="floatingAddress"
+                placeholder="Street"
+                required
+            />
+            <label for="floatingAddress">Address</label>
+        </div>
+    </div>
+    <div class="row g-3">
+      <div class="form-floating col-md-3">
+        <input
+          type="text"
+          name="city"
+          class="form-control"
+          id="floatingCity"
+          placeholder="Calgary"
+          required
+        />
+        <label for="floatingCity">City</label>
+        </div>
+        <div class="form-floating col-md-3">
+            <select name="province" class="form-select" id="floatingProvince" required>
+                 <option value="" disabled selected hidden>Pick a province...</option>
+                <option value="AB">AB</option>
+                <option value="BC">BC</option>
+                <option value="MB">MB</option>
+                <option value="NB">NB</option>
+                <option value="NL">NL</option>
+                <option value="NT">NT</option>
+                <option value="NS">NS</option>
+                <option value="NU">NU</option>
+                <option value="ON">ON</option>
+                <option value="PE">PE</option>
+                <option value="QC">QC</option>
+                <option value="SK">SK</option>
+                <option value="YT">YT</option>
+            </select>
+            <label for="floating-province">Province / Territory</label>
+        </div>
+      <div class="form-floating col-md-3">
+        <input
+          type="text"
+          name="postalCode"
+          class="form-control upperText"
+          id="floatingPostal"
+          minlength="6"
+          maxlength="6"
+          placeholder="Canada"
+          required
+        />
+        <label for="floatingPostal">Postal Code</label>
+      </div>
+      <div class="form-floating col-md-3">
+        <input
+          type="text"
+          name="country"
+          class="form-control upperText"
+          id="floatingCountry"
+          placeholder="Canada"
+          required
+        />
+        <label for="floatingCountry">Country</label>
+      </div>
+    </div>
+
+    <div class="row g-5"></div>
+    <div class="row g-3">
+        <div class="form-floating mb-4">
+        <select class="form-control" id="floatingAgentId" name="agentId" required>
+            <option value="" disabled selected hidden>Pick an agent...</option>
+            <% agents.forEach(agent => { %>
+            <option value="<%= agent.AgentId %>">
+            <%= agent.AgentId + " - " + agent.AgtFirstName + " " +
+            agent.AgtLastName %>
+            </option>
+            <% }) %>
+        </select>
+        <label for="floatingAgentId">Agent ID</label>
+        </div>
+    </div>
+
+    <h4 class="h4">Account Details</h4>
+    <div class="row g-3">
+      <div class="form-floating col-md-4">
+        <input
+          type="text"
+          name="username"
+          class="form-control"
+          id="floatingUser"
+          placeholder="Username"
+          required
+        />
+        <label for="floatingUser">Username</label>
+      </div>
+      <div class="form-floating col-md-4">
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          id="floatingPassword"
+          placeholder="Password"
+          required
+        />
+        <label for="floatingPassword">Password</label>
+      </div>
+      <div class="form-floating col-md-4">
+        <input
+          type="password"
+          name="confirmpassword"
+          class="form-control"
+          id="floatingConfirmPassword"
+          placeholder="Password"
+          required
+        />
+        <label for="floatingConfirmPassword">Confirm Password</label>
+      </div>
+    </div>
+
+    <div class="row justify-content-center gap-2 py-4 mt-5">
+      <button type="submit" class="btn btn-primary py-2 col-md-3">
+        Register
+      </button>
+      <button type="reset" class="btn btn-secondary py-2 col-md-3">
+        Reset
+      </button>
+    </div>
+  </form>
+</main>
 
 <%- include("includes/footer.ejs") %>

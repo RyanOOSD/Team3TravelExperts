@@ -1,196 +1,240 @@
 <%- include("includes/header.ejs") %>
 
-    <div class="container my-5">
-      <div class="booking-form">
-        <h2 class="text-center my-4">Travel Booking Form</h2>
+<div class="container my-5">
+  <div class="booking-form">
+    <h2 class="text-center my-4">Travel Booking Form</h2>
 
-        <form action="/submit-booking" method="POST" onsubmit="return bookValidation()">
+    <form action="/submit-booking" method="POST" class="needs-validation">
+      <input
+        type="hidden"
+        name="packageId"
+        id="packageNumId"
+        value="<%= package.PackageId %>"
+      />
+      <!-- Package Details Section (Disabled) -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Package Name</label>
           <input
-            type="hidden"
-            name="packageId"
-            id="packageNumId"
-            value="<%= package.PackageId %>"
+            type="text"
+            class="form-control"
+            id="packageNameId"
+            value="<%= package.PkgName %>"
+            disabled
           />
-          <!-- Package Details Section (Disabled) -->
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label class="form-label">Package Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="packageNameId"
-                value="<%= package.PkgName %>"
-                disabled
-              />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Package Price</label>
-              <input
-                type="text"
-                class="form-control"
-                id="packagePriceId"
-                value="$<%= package.PkgBasePrice %>"
-                disabled
-              />
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label class="form-label">Start Date</label>
-              <input
-                type="text"
-                class="form-control"
-                id="packageStartId"
-                value="<%= new Date(package.PkgStartDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>"
-                disabled
-              />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">End Date</label>
-              <input
-                type="text"
-                class="form-control"
-                id="packageEndId"
-                value="<%= new Date(package.PkgEndDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>"
-                disabled
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div>
-              <label for="travelerCountId" class="form-label">Number of Travellers</label>
-              <input type="number" name="travelerCount" class="form-control" id="travelerCountId">
-            </div>
-          </div>
-
-          <!-- Customer Information Section -->
-          <h5 class="mt-4">Customer Information</h5>
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label for="firstNameId" class="form-label">First Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="firstNameId"
-                name="firstName"
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="lastNameId" class="form-label">Last Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="lastNameId"
-                name="lastName"
-              />
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="addressId" class="form-label">Address</label>
-            <input
-              type="text"
-              class="form-control"
-              id="addressId"
-              name="address"
-            />
-          </div>
-
-          <div class="row mb-3">
-            <div class="col-md-3">
-              <label for="cityId" class="form-label">City</label>
-              <input
-                type="text"
-                class="form-control"
-                id="cityId"
-                name="city"
-              />
-            </div>
-            <div class="col-md-3">
-              <label for="provinceId" class="form-label">Province</label>
-              <input
-                type="text"
-                class="form-control"
-                id="provinceId"
-                name="province"
-              />
-            </div>
-            <div class="col-md-3">
-              <label for="postalCodeId" class="form-label">Postal Code</label>
-              <input
-                type="text"
-                class="form-control"
-                id="postalCodeId"
-                name="postalCode"
-              />
-            </div>
-            <div class="col-md-3">
-              <label for="countryId" class="form-label">Country</label>
-              <input
-                type="text"
-                class="form-control"
-                id="countryId"
-                name="country"
-              />
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label for="homePhoneId" class="form-label">Home Phone</label>
-              <input
-                type="tel"
-                class="form-control"
-                id="homePhoneId"
-                name="homePhone"
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="busPhoneId" class="form-label">Business Phone</label>
-              <input
-                type="tel"
-                class="form-control"
-                id="busPhoneId"
-                name="busPhone"
-              />
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col-md-12">
-              <label for="emailId" class="form-label">Email</label>
-              <input
-                type="email"
-                class="form-control"
-                id="emailId"
-                name="email"
-              />
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="agentId" class="form-label">Agent ID</label>
-            <select
-              class="form-control"
-              id="agentId"
-              name="agentId"
-            >
-              <option value="" disabled selected hidden></option>
-              <% agents.forEach(agent => { %>
-                <option value="<%= agent.AgentId %>"><%= agent.AgentId + " - " + agent.AgtFirstName + " " + agent.AgtLastName %></option>
-              <% }) %>
-            </select>
-          </div>
-
-          <!-- Submit Button -->
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary mt-4">
-              Submit Booking
-            </button>
-          </div>
-        </form>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Package Price</label>
+          <input
+            type="text"
+            class="form-control"
+            id="packagePriceId"
+            value="$<%= package.PkgBasePrice %>"
+            disabled
+          />
+        </div>
       </div>
-    </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Start Date</label>
+          <input
+            type="text"
+            class="form-control"
+            id="packageStartId"
+            value="<%= new Date(package.PkgStartDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>"
+            disabled
+          />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">End Date</label>
+          <input
+            type="text"
+            class="form-control"
+            id="packageEndId"
+            value="<%= new Date(package.PkgEndDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>"
+            disabled
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="travelerCountId" class="form-label"
+            >Number of Travellers</label
+          >
+          <input
+            type="number"
+            required
+            name="travelerCount"
+            class="form-control"
+            id="travelerCountId"
+            value="1"
+            min="1"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="tripType" class="form-label"> Trip Type</label>
+          <select name="tripType" class="form-control" id="tripType" required>
+            <!-- dummy option for validation -->
+            <option value="" disabled selected hidden>Pick a trip type...</option>
+            <option value="L">Leisure</option>
+            <option value="B">Business</option>
+            <option value="G">Group</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Customer Information Section -->
+      <h5 class="mt-4">Customer Information</h5>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="firstNameId" class="form-label">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="firstNameId"
+            name="firstName"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="lastNameId" class="form-label">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastNameId"
+            name="lastName"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="addressId" class="form-label">Address</label>
+        <input
+          type="text"
+          class="form-control"
+          id="addressId"
+          name="address"
+          required
+        />
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-3">
+          <label for="cityId" class="form-label">City</label>
+          <input
+            type="text"
+            class="form-control"
+            id="cityId"
+            name="city"
+            required
+          />
+        </div>
+        <div class="col-md-3">
+          <label for="provinceId" class="form-label">Province / Territory</label>
+          <select name="province" class="form-select" id="provinceId" required>
+              <option value="" disabled selected hidden>Pick a province...</option>
+              <option value="AB">AB</option>
+              <option value="BC">BC</option>
+              <option value="MB">MB</option>
+              <option value="NB">NB</option>
+              <option value="NL">NL</option>
+              <option value="NT">NT</option>
+              <option value="NS">NS</option>
+              <option value="NU">NU</option>
+              <option value="ON">ON</option>
+              <option value="PE">PE</option>
+              <option value="QC">QC</option>
+              <option value="SK">SK</option>
+              <option value="YT">YT</option>
+          </select>
+      </div>
+        <div class="col-md-3">
+          <label for="postalCodeId" class="form-label">Postal Code</label>
+          <input
+            type="text"
+            class="form-control upperText"
+            id="postalCodeId"
+            name="postalCode"
+            required
+            minlength="6"
+            maxlength="6"
+          />
+        </div>
+        <div class="col-md-3">
+          <label for="countryId" class="form-label">Country</label>
+          <input
+            type="text"
+            class="form-control upperText"
+            id="countryId"
+            name="country"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="homePhoneId" class="form-label">Home Phone</label>
+          <input
+            type="tel"
+            class="form-control"
+            id="homePhoneId"
+            required
+            name="homePhone"
+            minlength="10"
+            maxlength="10"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="busPhoneId" class="form-label">Business Phone</label>
+          <input
+            type="tel"
+            class="form-control"
+            id="busPhoneId"
+            name="busPhone"
+            required
+            minlength="10"
+            maxlength="10"
+          />
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <label for="emailId" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="emailId"
+            name="email"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="agentId" class="form-label">Agent ID</label>
+        <select class="form-control" id="agentId" name="agentId" required>
+          <option value="" disabled selected hidden></option>
+          <% agents.forEach(agent => { %>
+          <option value="<%= agent.AgentId %>">
+            <%= agent.AgentId + " - " + agent.AgtFirstName + " " +
+            agent.AgtLastName %>
+          </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary mt-4">
+          Submit Booking
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <%- include("includes/footer.ejs") %>

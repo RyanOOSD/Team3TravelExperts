@@ -12,6 +12,7 @@ This project involves building a dynamic travel agency website using **Express.j
 - **nodemon**
 - **ejs**
 - **create-start**
+- **bcrypt**
 
 ---
 
@@ -22,7 +23,7 @@ This project involves building a dynamic travel agency website using **Express.j
 npm init -y
 
 # Step 2: Install required dependencies
-npm i --save-dev nodemon ejs express express-validator mysql2
+npm i --save-dev nodemon ejs express express-validator mysql2 create-start bcrypt
 
 # Step 3: Start the server
 npm run start

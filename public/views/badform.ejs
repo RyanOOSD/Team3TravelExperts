@@ -1,18 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1 class="text-center fs-1 pt-5">Your form submission was invalid.</h1>
-    <p class="text-center">Please try your submission again.</p>
-    <p class="text-center">Problems with your submission: <%= badSubmit %></p>
-    <div class="container">
-        <div class="d-flex justify-content-center">
-            <a href="/"><button class="btn btn-primary btn-lg px-4 rounded-pill">Return to Homepage</button></a>
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invalid Submission</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+      }
+      .content {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+      }
+      h1 {
+        color: #dc3545;
+      }
+      p {
+        margin-bottom: 1rem;
+        color: #6c757d;
+      }
+      .btn-primary {
+        background-color: #007bff;
+        border: none;
+      }
+      .btn-primary:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <h1 class="fs-1 mb-4">Your form submission was invalid.</h1>
+      <p >Problems with your submission: 
+        <p class="text-danger"><%= badSubmit %></p>
+      </p>
+      <div class="d-flex justify-content-center mt-4">
+        <a href="javascript:history.back()">
+          <button class="btn btn-primary btn-lg px-4 rounded-pill">
+            Return to Form
+          </button>
+        </a>
+      </div>
     </div>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
