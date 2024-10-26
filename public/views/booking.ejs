@@ -76,7 +76,7 @@
           <label for="tripType" class="form-label"> Trip Type</label>
           <select name="tripType" class="form-control" id="tripType" required>
             <!-- dummy option for validation -->
-            <option></option>
+            <option value="" disabled selected hidden>Pick a trip type...</option>
             <option value="L">Leisure</option>
             <option value="B">Business</option>
             <option value="G">Group</option>
@@ -132,17 +132,24 @@
           />
         </div>
         <div class="col-md-3">
-          <label for="provinceId" class="form-label">Province</label>
-          <input
-            type="text"
-            class="form-control upperText"
-            id="provinceId"
-            name="province"
-            required
-            minlength="2"
-            maxlength="2"
-          />
-        </div>
+          <label for="provinceId" class="form-label">Province / Territory</label>
+          <select name="province" class="form-select" id="provinceId" required>
+              <option value="" disabled selected hidden>Pick a province...</option>
+              <option value="AB">AB</option>
+              <option value="BC">BC</option>
+              <option value="MB">MB</option>
+              <option value="NB">NB</option>
+              <option value="NL">NL</option>
+              <option value="NT">NT</option>
+              <option value="NS">NS</option>
+              <option value="NU">NU</option>
+              <option value="ON">ON</option>
+              <option value="PE">PE</option>
+              <option value="QC">QC</option>
+              <option value="SK">SK</option>
+              <option value="YT">YT</option>
+          </select>
+      </div>
         <div class="col-md-3">
           <label for="postalCodeId" class="form-label">Postal Code</label>
           <input
